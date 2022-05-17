@@ -1,0 +1,79 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.form-container {
+  width: 100%;
+  gap: 0.4rem;
+  @extend .flex-column, .flex-justify-center;
+  .input-container {
+    width: 100%;
+  }
+  .kash-container {
+    padding: 0;
+  }
+  .kash-container > div {
+    @extend .flex-column, .align-start;
+    width: 50%;
+  }
+  svg {
+    @extend .padding-full;
+  }
+  .input {
+    @extend .flex-row;
+    border: 1px solid $light-gray;
+    width: 100%;
+  }
+  .input:focus-within {
+    border: 1px solid $dark-gray;
+  }
+  input {
+    font-family: Poppins;
+    width: 100%;
+    background-color: $white;
+    margin-top: 0rem;
+    border-radius: 0.2rem;
+  }
+  fieldset:focus-within {
+    border: 1px solid $primary-red;
+  }
+  .error-msg {
+    color: $red;
+  }
+  .error-border,
+  .error-border:focus-within {
+    border: 1px solid $primary-red;
+  }
+  .form-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  fieldset {
+    text-align: left;
+    border-radius: 0.2rem;
+    background-color: $white;
+    width: 80%;
+    legend {
+      margin-left: calc($spacing-unit * 1);
+    }
+  }
+  .btn-submit {
+    @extend .padding-full;
+    width: 50%;
+  }
+  .btn-submit-container {
+    @extend .flex-row, .flex-justify-center, .gap-half;
+    color: $white;
+  }
+  .loader {
+    height: 0.5rem;
+    width: 0.5rem;
+    border: 10px solid $pale-gray;
+    border-top: 10px solid $dark-gray;
+  }
+  @media screen and (max-width: $medium) {
+    .kash-container > div {
+      width: 80%;
+    }
+  }
+}

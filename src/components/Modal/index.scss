@@ -1,0 +1,38 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+#kash-modal {
+  display: flex;
+  cursor: pointer;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+.kash-modal {
+  color: $black;
+  @extend .flex-row, .padding-half;
+
+  top: 0;
+  border-radius: 1rem;
+  overflow-y: scroll;
+
+  .modal-header {
+    width: 100%;
+    @extend .flex-row, .flex-space-between;
+    svg {
+      @extend .padding-half;
+      font-size: calc($spacing-unit * 1.6);
+    }
+    .modal-header-title {
+      margin: 0;
+      font-size: 1.4rem;
+      @extend .padding-half;
+      text-transform: uppercase;
+      font-family: 500;
+    }
+  }
+  .modal-container {
+    @extend .padding-half;
+    width: 90%;
+  }
+}
