@@ -2,7 +2,7 @@
 @import "../../styles/variables.scss";
 
 .video-list-container {
-  @extend .flex-column;
+  @extend .flex-column, .margin-full;
   align-items: flex-start;
   box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem $pale-gray;
   border: 1px solid $light-gray;

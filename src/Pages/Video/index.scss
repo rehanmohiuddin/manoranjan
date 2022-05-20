@@ -1,0 +1,94 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.video-container {
+  svg {
+    color: $dark-gray;
+  }
+  @extend .flex-row;
+  width: 100%;
+  .video-list {
+    grid-template-columns: 1fr;
+    height: 50rem;
+  }
+  .video-left {
+    width: 70%;
+    height: 100%;
+    text-align: left;
+    @extend .padding-full;
+    .video-actions {
+      @extend .flex-row, .flex-space-between, .padding-full;
+      .actions {
+        @extend .flex-row, .gap-1;
+        div {
+          align-items: center;
+          cursor: pointer;
+          svg {
+            margin-right: calc($spacing-unit * 0.3);
+            color: $dark-gray;
+          }
+        }
+      }
+    }
+    .channel {
+      @extend .flex-row, .padding-full;
+      img {
+        border-radius: calc($spacing-unit * 5);
+        width: calc($spacing-unit * 4);
+        margin-right: calc($spacing-unit * 1);
+      }
+      padding-bottom: 0;
+    }
+
+    .video-description {
+      @extend .padding-full;
+    }
+    .title {
+      font-size: calc($spacing-unit * 1.2);
+      font-weight: 600;
+    }
+    .video-description {
+      font-size: calc($spacing-unit * 1);
+    }
+  }
+  .video-right {
+    .video-list-title {
+      padding-right: 0;
+    }
+    .video-list {
+      @extend .flex-column;
+      padding-left: 0;
+      max-width: calc($spacing-unit * 25);
+      height: 100%;
+      a {
+        color: $black;
+      }
+    }
+    .video {
+      @extend .flex-row, .gap-1;
+      width: 90%;
+      img {
+        width: 50%;
+      }
+      .video-body {
+        position: relative;
+        .watch-later {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          font-size: calc($spacing-unit * 1.2);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $medium) {
+  .video-container {
+    flex-direction: column;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}

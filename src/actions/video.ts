@@ -1,10 +1,11 @@
 import {
   getCategoriesRequestPayload,
   getCategoriesSuccessPayload,
+  getChannelRequestPayload,
+  getChannelSuccessPayload,
   getVideoRequestPayload,
   getVideosRequestPayload,
   getVideosSuccessPayload,
-  getVideoSuccessPayload,
   videoErrorPayload,
 } from "../types/videos";
 
@@ -19,6 +20,10 @@ const GET_VIDEOS_FAILURE = "GET_VIDEOS_FAILURE";
 const GET_VIDEO_REQUEST = "GET_VIDEO_REQUEST";
 const GET_VIDEO_SUCCESS = "GET_VIDEO_SUCCESS";
 const GET_VIDEO_FAILURE = "GET_VIDEO_FAILURE";
+
+const GET_CHANNEL_REQUEST = "GET_CHANNEL_REQUEST";
+const GET_CHANNEL_SUCCESS = "GET_CHANNEL_SUCCESS";
+const GET_CHANNEL_FAILURE = "GET_CHANNEL_FAILURE";
 
 const getCategoriesRequest = (payload: getCategoriesRequestPayload) => ({
   type: GET_CATEGORIES_REQUEST,
@@ -55,13 +60,28 @@ const getVideoRequest = (payload: getVideoRequestPayload) => ({
   payload,
 });
 
-const getVideoSuccess = (payload: getVideoSuccessPayload) => ({
+const getVideoSuccess = (payload: getVideosSuccessPayload) => ({
   type: GET_VIDEO_SUCCESS,
   payload,
 });
 
 const getVideoFailure = (payload: videoErrorPayload) => ({
   type: GET_VIDEO_FAILURE,
+  payload,
+});
+
+const getChannelRequest = (payload: getChannelRequestPayload) => ({
+  type: GET_CHANNEL_REQUEST,
+  payload,
+});
+
+const getChannelSuccess = (payload: getChannelSuccessPayload) => ({
+  type: GET_CHANNEL_SUCCESS,
+  payload,
+});
+
+const getChannelFailure = (payload: videoErrorPayload) => ({
+  type: GET_CATEGORIES_FAILURE,
   payload,
 });
 
@@ -75,6 +95,9 @@ export {
   GET_VIDEO_FAILURE,
   GET_VIDEO_REQUEST,
   GET_VIDEO_SUCCESS,
+  GET_CHANNEL_FAILURE,
+  GET_CHANNEL_REQUEST,
+  GET_CHANNEL_SUCCESS,
   getCategoriesRequest,
   getCategoriesSuccess,
   getCategoriesFailure,
@@ -84,4 +107,7 @@ export {
   getVideoRequest,
   getVideoSuccess,
   getVideoFailure,
+  getChannelFailure,
+  getChannelRequest,
+  getChannelSuccess,
 };

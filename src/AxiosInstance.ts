@@ -17,13 +17,6 @@ const AxiosInstance = axios.create({
 
 axios.interceptors.request.use(
   function (config) {
-    if (config.method === "GET") {
-      config.params = {
-        ...config.params,
-        key: process.env.REACT_APP_YOUTUBE_KEY,
-        regionCode: "IN",
-      };
-    }
     return config;
   },
   function (error) {
