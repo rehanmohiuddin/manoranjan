@@ -16,10 +16,16 @@ import {
 import { BUTTON } from "../../util/constants";
 import Logo from "../../assets/Manoranjan.png";
 import Button from "../Button";
+import Category from "../../components/Category";
+import { useSelector } from "react-redux";
+import { videoState } from "../../types/videos";
 
 function Header() {
   const [showMobNav, setMobNav] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { categories = [] } = useSelector(
+    (state: { video: videoState }) => state.video
+  );
   const isLoggedIn = false;
   const renderHeaderBody = () => (
     <>
@@ -60,6 +66,7 @@ function Header() {
       {showMobNav && (
         <div className="mobNav-container">{renderHeaderBody()}</div>
       )}
+      <Category categories={categories} />
     </header>
   );
 }

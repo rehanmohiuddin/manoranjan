@@ -1,0 +1,29 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.root-home-container {
+  @extend .flex-row;
+
+  .home-container {
+    @extend .flex-column, .padding-full;
+    position: absolute;
+    top: calc($spacing-unit * 10);
+    left: calc($spacing-unit * 9);
+    height: 74vh;
+    width: 88vw;
+    overflow-y: scroll;
+    .footer {
+      @extend .padding-half;
+    }
+  }
+  @media screen and (max-width: $medium) {
+    header {
+      left: 0;
+
+      width: 100vw;
+    }
+    .home-container {
+      left: 0;
+    }
+  }
+}

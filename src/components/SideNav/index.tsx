@@ -1,8 +1,9 @@
 import React from "react";
 import "./index.scss";
-import Logo from "../../assets/sjicon.png";
+import Logo from "../../assets/icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowCircleLeft,
   faHome,
   faPencil,
   faRankingStar,
@@ -10,26 +11,34 @@ import {
   faUser,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function Index() {
   const navigate = useNavigate();
   const navRoutes = [
-    { route: "/", icon: faHome },
-    { route: "/videos", icon: faPencil },
-    { route: "/palylist", icon: faRankingStar },
+    { route: "/", icon: faHome, name: "Home" },
+    { route: "/videos", icon: faPencil, name: "Videos" },
+    { route: "/palylist", icon: faRankingStar, name: "PlayLists" },
   ];
   return (
     <nav>
       <button>{"R".charAt(0)}</button>
       <div className="nav-icons">
-        {navRoutes.map(({ route, icon }) => (
-          <Link to={route}>
+        {navRoutes.map(({ route, icon, name }) => (
+          <NavLink
+            className={({ isActive }) => (isActive ? "active" : "inactive")}
+            to={route}
+          >
             <FontAwesomeIcon className="nav-icon" icon={icon} size="2x" />
-          </Link>
+            {name}
+          </NavLink>
         ))}
-        <FontAwesomeIcon className="nav-icon" icon={faSignOut} />
+        <div className="log-out-btn">
+          <FontAwesomeIcon className="nav-icon" icon={faSignOut} />
+          Log Out
+        </div>
       </div>
+      <FontAwesomeIcon className="close-nav" icon={faArrowCircleLeft} />
       <div className="filler"></div>
       <img src={Logo} />
     </nav>

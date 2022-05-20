@@ -74,7 +74,8 @@ export function makeServer({ environment = "development" } = {}) {
     },
 
     routes() {
-      this.namespace = "api";
+      this.namespace = "https://www.googleapis.com/youtube/v3";
+      this.timing = 1500;
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));

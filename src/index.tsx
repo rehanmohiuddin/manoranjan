@@ -6,15 +6,19 @@ import { makeServer } from "./server";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter } from "react-router-dom";
+import ToastContainer from "./components/Toast";
 
 // Call make Server
-makeServer();
+// makeServer();
 
 const ele = document.getElementById("root") as HTMLElement;
 
 const root = ReactDOM.createRoot(ele);
 root.render(
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <App />
+      <ToastContainer />
+    </Provider>
   </BrowserRouter>
 );

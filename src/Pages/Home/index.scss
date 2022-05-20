@@ -1,0 +1,6 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.container {
+  @extend .flex-column, .gap-1;
+}

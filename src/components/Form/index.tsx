@@ -12,6 +12,7 @@ interface Props {
       name: string;
       type: string;
       placeholder: string;
+      value: string;
       tagName: string;
       required: boolean;
       icon: any;
@@ -38,8 +39,7 @@ const Index = ({
       <div className="form-title">{title}</div>
       <div className="error-msg">{errorState && errorState.errorMsg}</div>
       {Object.keys(fields).map((key) => {
-        const { name, type, placeholder, tagName, required, icon } =
-          fields[key];
+        const { name, type, placeholder, value, required, icon } = fields[key];
         return (
           <div className="kash-container  kash-flex kash-justify-center kash-align-center  kash-gap input-container">
             <div id="kash-input-click">
@@ -55,6 +55,7 @@ const Index = ({
               >
                 <FontAwesomeIcon size="1x" icon={icon} />
                 <input
+                  defaultValue={value}
                   name={key}
                   onChange={(e) => {
                     onTextInput(key, e.target.value);
@@ -77,7 +78,12 @@ const Index = ({
           type={BUTTON.BUTTON}
           style={BUTTON.PRIMARY}
           callBack={submitCallBack}
-        />
+        >
+          <div className="btn-submit-container">
+            {loading && <Loader />}
+            <div>{loading ? "Please Wait" : formFor}</div>
+          </div>
+        </Button>
       </div>
     </div>
   );

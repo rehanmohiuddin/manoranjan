@@ -1,0 +1,80 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.video-list-container {
+  @extend .flex-column;
+  align-items: flex-start;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem $pale-gray;
+  border: 1px solid $light-gray;
+  .video-list-title {
+    @extend .padding-half;
+    text-align: left;
+    width: 98%;
+    font-size: calc($spacing-unit * 1.4);
+    border-bottom: 1px solid $light-gray;
+  }
+  .video-list {
+    @extend .padding-full, .gap-1;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(calc($spacing-unit * 16), 1fr)
+    );
+    max-width: calc($spacing-unit * 80);
+    scroll-snap-type: x mandatory;
+    overflow: auto;
+    a {
+      color: $black;
+    }
+    .video {
+      scroll-snap-align: start;
+      text-align: left;
+      background-color: $white;
+      box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem $light-gray;
+      border-radius: calc($spacing-unit * 0.3);
+      img {
+        width: 100%;
+      }
+      .video-title {
+        font-size: calc($spacing-unit * 1.1);
+        font-weight: 500;
+        width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-align: start;
+        color: $dark-gray;
+      }
+      .video-bottom {
+        @extend .flex-row, .flex-space-between;
+        width: 100%;
+        svg,
+        .video-channel {
+          @extend .padding-half;
+        }
+        svg {
+          font-size: calc($spacing-unit * 1.2);
+          color: $dark-gray;
+          cursor: pointer;
+        }
+        .video-channel {
+          color: $light-gray;
+        }
+      }
+    }
+    .video-thumbnail {
+      width: calc($spacing-unit * 15);
+    }
+  }
+}
+
+@media screen and (max-width: $medium) {
+  .video-list-container {
+    width: 100%;
+    .video-list {
+      grid-template-columns: 1fr;
+    }
+  }
+}

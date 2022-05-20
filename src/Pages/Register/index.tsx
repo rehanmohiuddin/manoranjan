@@ -12,8 +12,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AuthLeft from "../../components/AuthLeft";
 import { stateProp } from "../../types/form";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { registerRequest } from "../../actions/auth";
+import { authState } from "../../types/auth";
 
 function Index() {
+  const { loading, isRegistered } = useSelector(
+    (state: { auth: authState }) => state.auth
+  );
+  const dispatch = useDispatch();
   const [fields, setField] = useState<stateProp>({
     firstName: {
       name: "First Name",
@@ -106,26 +114,25 @@ function Index() {
   const submit = () => {
     const isEmpty = isFieldsEmpty();
     const payload: {
-      [key: string]: string;
-    } = {};
-    Object.keys(fields).forEach((key) => {
-      payload[key] = fields[key].value;
-    });
-  };
-
-  const resendEmail = () => {
-    const payload: {
-      [key: string]: string;
-    } = {};
-    Object.keys(fields).forEach((key) => {
-      payload[key] = fields[key].value;
-    });
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+    } = {
+      email: fields.email.value,
+      firstName: fields.firstName.value,
+      lastName: fields.lastName.value,
+      password: fields.password.value,
+      confirmPassword: fields.confirmPassword.value,
+    };
+    dispatch(registerRequest(payload));
   };
 
   return (
     <div className="auth-container">
       <Header />
-
+      {isRegistered && <Navigate to={"/login"} replace />}
       <div className="login-container">
         <AuthLeft />
         <div className="login-box">
@@ -135,7 +142,7 @@ function Index() {
             onTextInput={textFromForm}
             submitCallBack={submit}
             errorState={errorState}
-            loading={false}
+            loading={loading}
             formFor={"Register"}
           />
           <div className="login-btn">

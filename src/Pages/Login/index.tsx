@@ -10,12 +10,17 @@ import { Navigate } from "react-router-dom";
 import AuthLeft from "../../components/AuthLeft";
 import Header from "../../components/Header";
 import { stateProp } from "../../types/form";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest } from "../../actions/auth";
+import { AppState } from "../../reducers";
 
 function Index() {
+  const dispatch = useDispatch();
+  const { loading, isLoggedIn } = useSelector((state: AppState) => state.auth);
   const [fields, setField] = useState<stateProp>({
     email: {
       name: "Email",
-      value: "",
+      value: "rehan.4942@gmail.com",
       type: "email",
       placeholder: "johndoe@gmail.com",
       tagName: "email",
@@ -30,7 +35,7 @@ function Index() {
     },
     password: {
       name: "Password",
-      value: "",
+      value: "Rehan@123",
       type: "password",
       placeholder: "Enter Password",
       tagName: "password",
@@ -56,13 +61,20 @@ function Index() {
 
   const submit = () => {
     const isEmpty = isFieldsEmpty();
-    const payload = {};
+    let payload: {
+      email: string;
+      password: string;
+    } = {
+      email: fields.email.value,
+      password: fields.password.value,
+    };
+    dispatch(loginRequest(payload));
   };
 
   return (
     <div className="auth-container">
       <Header />
-      {/* {isLoggedIn && <Navigate to={"/"} replace />} */}
+      {isLoggedIn && <Navigate to={"/"} replace />}
       <div className="login-container">
         <AuthLeft />
         <div className="login-box">
@@ -72,7 +84,7 @@ function Index() {
             onTextInput={textFromForm}
             submitCallBack={submit}
             errorState={errorState}
-            loading={false}
+            loading={loading}
             formFor={"Login"}
           />
           <div className="login-btn">

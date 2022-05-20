@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Response } from "miragejs";
 /**
  * All the routes related to Category are present here.
@@ -9,10 +10,15 @@ import { Response } from "miragejs";
  * send GET Request at /api/categories
  * */
 
-export const getAllCategoriesHandler = function () {
+export const getAllCategoriesHandler = async function () {
   try {
-    return new Response(200, {}, { categories: this.db.categories });
+    const resp = await axios.get(
+      "https://www.googleapis.com/youtube/v3/videoCategories?key=AIzaSyBaT8WNXObDqAs_qVJFhogZGoHW2AjpXAY&regionCode=IN&maxResults=10"
+    );
+    console.log(resp);
+    return new Response(200, {}, { categories: resp.data.items });
   } catch (error) {
+    console.log({ error });
     return new Response(
       500,
       {},

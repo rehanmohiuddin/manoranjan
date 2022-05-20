@@ -1,0 +1,37 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.categories-container {
+  @extend .flex-row, .gap-1, .padding-full, .flex-start;
+  overflow: auto;
+  width: calc($spacing-unit * 80);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-top: calc($spacing-unit * 1);
+
+  .category {
+    @extend .padding-half;
+    white-space: nowrap;
+    display: inline-block;
+    background-color: $pale-gray;
+    color: $black;
+    cursor: pointer;
+    border-radius: 0.2rem;
+  }
+  .category:hover {
+    background-color: $dark-gray;
+    color: $white;
+  }
+  .category-active {
+    background-color: $dark-gray;
+    color: $white;
+  }
+}
+.categories-container::-webkit-scrollbar {
+  display: none;
+}
+@media screen and (max-width: $medium) {
+  .categories-container {
+    width: calc($spacing-unit * 18);
+  }
+}
