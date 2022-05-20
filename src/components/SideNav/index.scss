@@ -1,0 +1,37 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+nav {
+  @extend .flex-column, .flex-start, .gap-1;
+  height: 100vh;
+  background-color: $white;
+  //   border-radius: 0.3rem;
+  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem $light-gray;
+  // position: absolute;
+  button {
+    @extend .padding-full, .margin-full;
+    border: none;
+    background-color: $dark-gray;
+    border-radius: 0.2rem;
+    color: $white;
+  }
+  .filler {
+    flex-grow: 1;
+  }
+  .nav-icons {
+    @extend .flex-column, .padding-full, .margin-full, .gap-1;
+    gap: calc($spacing-unit * 2);
+  }
+  .nav-icon {
+    color: $black;
+    font-size: calc($spacing-unit * 1.5);
+  }
+  img {
+    width: calc($spacing-unit * 4);
+    @extend .padding-full;
+    // margin-bottom: calc();
+  }
+  svg {
+    cursor: pointer;
+  }
+}

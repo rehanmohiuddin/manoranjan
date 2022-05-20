@@ -1,0 +1,58 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.kash-snackbar {
+  @extend .flex-row;
+  white-space: nowrap;
+  margin-top: calc($spacing-unit * 5);
+  top: 0;
+  z-index: 1000;
+  opacity: 1;
+  animation-name: appearToast;
+  animation-duration: 800ms;
+  .btn-primary {
+    background-color: transparent;
+    color: $white;
+  }
+  svg {
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    animation-name: hoverBtn;
+    animation-duration: 800ms;
+    background-color: $lighest-gray;
+    border-radius: 0.25rem;
+  }
+  .actions {
+    @extend .gap-half;
+  }
+}
+.error {
+  background-color: $red;
+}
+.warning {
+  background-color: $warning;
+}
+
+@keyframes hoverBtn {
+  from {
+    background-color: transparent;
+  }
+  to {
+    background-color: $lighest-gray;
+  }
+}
+.kash-snackbar::before {
+  animation-name: appearToast;
+  animation-duration: 800ms;
+  right: 0;
+}
+
+@keyframes appearToast {
+  from {
+    right: -500px;
+  }
+  to {
+    right: 0;
+  }
+}
