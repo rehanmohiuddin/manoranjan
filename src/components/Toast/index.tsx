@@ -4,23 +4,24 @@ import React, { useEffect } from "react";
 import "./index.scss";
 import Button from "../Button";
 import { BUTTON } from "../../util/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../reducers";
+import { closeToast } from "../../actions/toast";
 
 function Index() {
   const {
     message = "",
-    action = "",
-    toast = {
-      close: () => {},
-    },
+    action,
     messageType = "",
-  } = {};
+  } = useSelector((state: AppState) => state.toast);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
-      toast.close();
+      dispatch(closeToast());
     }, 5000);
     return () => {
-      toast.close();
+      dispatch(closeToast());
     };
   }, []);
 
@@ -39,7 +40,10 @@ function Index() {
                 title={"OK"}
               />
             )}
-            <FontAwesomeIcon icon={faTimesCircle} onClick={toast.close} />
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              onClick={() => dispatch(closeToast())}
+            />
           </div>
         </div>
       )}

@@ -92,6 +92,10 @@
   height: 10px;
 }
 
+.container {
+  @extend .flex-column, .padding-full;
+}
+
 .loader-lg {
   border: 10px solid $pale-gray;
   border-top: 10px solid $light-gray;

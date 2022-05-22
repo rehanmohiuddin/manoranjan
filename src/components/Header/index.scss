@@ -4,9 +4,10 @@
 header {
   position: fixed;
   top: 0;
-  left: calc($spacing-unit * 6.2);
+  left: calc($spacing-unit * 9);
   width: 92vw;
   z-index: 1;
+  background-color: $white;
   @extend .flex-column;
   span {
     @extend .padding-half;
@@ -70,7 +71,6 @@ header {
     display: none;
     padding: 0;
     position: relative;
-    margin-top: calc($spacing-unit * 3);
     li,
     a {
       font-size: larger;
@@ -91,15 +91,13 @@ header {
     color: $black;
     cursor: pointer;
   }
-  @media screen and (max-width: $medium) {
-    .mobNav {
-      display: flex;
-    }
-  }
 
   @media screen and (max-width: $medium) {
     .mobNav {
       display: flex;
+    }
+    header {
+      left: 0;
     }
     .desktop {
       display: none;

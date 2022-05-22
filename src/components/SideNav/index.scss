@@ -5,22 +5,34 @@ nav {
   @extend .flex-column, .flex-start, .gap-1;
   height: 100vh;
   background-color: $white;
-  //   border-radius: 0.3rem;
   box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem $light-gray;
-  // position: absolute;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
   button {
     @extend .padding-full, .margin-full;
     border: none;
     background-color: $dark-gray;
     border-radius: 0.2rem;
     color: $white;
+    margin: calc($spacing-unit * 1);
   }
   .filler {
     flex-grow: 1;
   }
   .nav-icons {
-    @extend .flex-column, .padding-full, .margin-full, .gap-1;
-    gap: calc($spacing-unit * 2);
+    @extend .flex-column, .gap-1;
+    a,
+    .log-out-btn {
+      @extend .flex-row, .padding-full, .gap-1;
+      text-align: center;
+      color: $dark-gray;
+      width: 75%;
+    }
+    a:hover {
+      background-color: $pale-gray;
+    }
   }
   .nav-icon {
     color: $black;
@@ -29,9 +41,21 @@ nav {
   img {
     width: calc($spacing-unit * 4);
     @extend .padding-full;
-    // margin-bottom: calc();
   }
   svg {
     cursor: pointer;
+  }
+  .active {
+    background-color: $pale-gray;
+    svg {
+      color: $primary-red;
+    }
+  }
+  .close-nav {
+    position: absolute;
+    right: 0;
+    bottom: calc($spacing-unit * 8);
+    font-size: calc($spacing-unit * 2);
+    display: none;
   }
 }
