@@ -3,4 +3,5 @@
 
 .container {
   @extend .flex-column, .gap-1;
+  padding: 0;
 }

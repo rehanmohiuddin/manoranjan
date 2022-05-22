@@ -18,7 +18,7 @@ function Index() {
   const navRoutes = [
     { route: "/", icon: faHome, name: "Home" },
     { route: "/videos", icon: faPencil, name: "Videos" },
-    { route: "/palylist", icon: faRankingStar, name: "PlayLists" },
+    { route: "/playlist", icon: faRankingStar, name: "PlayLists" },
   ];
   return (
     <nav>

@@ -17,11 +17,28 @@ export default (state: authState, action: authActions) => {
         loading: true,
       };
     case LOGIN_SUCCESS:
+      console.log(payload);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...payload,
+          likes: [],
+          history: [],
+          playlists: [],
+          watchlater: [],
+        })
+      );
       return {
         ...state,
         loading: false,
         isLoggedIn: true,
-        user: payload,
+        user: {
+          ...payload,
+          likes: [],
+          history: [],
+          playlists: [],
+          watchlater: [],
+        },
       };
     case LOGIN_FAILURE:
       return {

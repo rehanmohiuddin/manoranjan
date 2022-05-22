@@ -30,8 +30,8 @@ function* loginSaga({ type, payload }: loginRequest): any {
     yield all([
       put(
         loginSuccess({
-          ...response.data.foundUser,
-          token: response.data.encodedToken,
+          ...response.data.message.user,
+          token: response.data.message.token,
         })
       ),
       put(

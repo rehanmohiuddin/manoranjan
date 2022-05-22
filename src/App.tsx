@@ -4,6 +4,8 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Home from "./Pages/Home";
 import Watch from "./Pages/Video";
+import Playlist from "./Pages/Playlist";
+import PlayListVideos from "./Pages/Playlist/PlayListVideos";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/watch" element={<Watch />} />
+        <Route path="/playlist" element={<Playlist />} />
+        <Route path="/playlist/videos" element={<PlayListVideos />} />
       </Routes>
     </div>
   );
