@@ -6,7 +6,7 @@ import useFormValidator from "../../hooks/useFormValidator";
 import Button from "../../components/Button";
 import { BUTTON } from "../../util/constants";
 import { faEnvelopeSquare, faKey } from "@fortawesome/free-solid-svg-icons";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import AuthLeft from "../../components/AuthLeft";
 import Header from "../../components/Header";
 import { stateProp } from "../../types/form";
@@ -17,6 +17,8 @@ import { AppState } from "../../reducers";
 function Index() {
   const dispatch = useDispatch();
   const { loading, isLoggedIn } = useSelector((state: AppState) => state.auth);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [fields, setField] = useState<stateProp>({
     email: {
       name: "Email",
@@ -35,7 +37,7 @@ function Index() {
     },
     password: {
       name: "Password",
-      value: "Rehan@123",
+      value: "Test@123",
       type: "password",
       placeholder: "Enter Password",
       tagName: "password",
@@ -71,10 +73,15 @@ function Index() {
     dispatch(loginRequest(payload));
   };
 
+  useEffect(() => {
+    const { state }: any = location;
+    const from = state?.from.pathname || "/";
+    isLoggedIn && navigate(from, { replace: true });
+  }, [isLoggedIn]);
+
   return (
     <div className="auth-container">
       <Header />
-      {isLoggedIn && <Navigate to={"/"} replace />}
       <div className="login-container">
         <AuthLeft />
         <div className="login-box">

@@ -1,7 +1,9 @@
 import {
+  GET_USER_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOG_OUT,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -11,6 +13,11 @@ import { authActions, authState } from "../types/auth";
 export default (state: authState, action: authActions) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_USER_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+      };
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -61,6 +68,18 @@ export default (state: authState, action: authActions) => {
         ...state,
         error: payload,
       };
+
+    case LOG_OUT:
+      localStorage.removeItem("user");
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: {},
+        likes: [],
+        history: [],
+        playlists: [],
+      };
+
     default:
       return { ...state };
   }

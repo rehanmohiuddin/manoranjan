@@ -10,21 +10,77 @@ import Videos from "./Pages/Videos";
 import LikedVideos from "./Pages/LikedVideos";
 import WatchLater from "./Pages/WatchLater";
 import History from "./Pages/History";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
+  const routes: Array<{
+    path: string;
+    Component: React.FC;
+    isProtected?: boolean;
+  }> = [
+    {
+      path: "/",
+      Component: Home,
+    },
+    {
+      path: "/login",
+      Component: Login,
+    },
+    {
+      path: "/register",
+      Component: Register,
+    },
+    {
+      path: "/watch",
+      Component: Watch,
+      isProtected: true,
+    },
+    {
+      path: "/playlist",
+      Component: Playlist,
+      isProtected: true,
+    },
+    {
+      path: "/playlist/videos",
+      Component: PlayListVideos,
+      isProtected: true,
+    },
+    {
+      path: "/videos",
+      Component: Videos,
+      isProtected: true,
+    },
+    {
+      path: "/like/videos",
+      Component: LikedVideos,
+      isProtected: true,
+    },
+    {
+      path: "/watchlater",
+      Component: WatchLater,
+      isProtected: true,
+    },
+    {
+      path: "/history",
+      Component: History,
+      isProtected: true,
+    },
+  ];
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/watch" element={<Watch />} />
-        <Route path="/playlist" element={<Playlist />} />
-        <Route path="/playlist/videos" element={<PlayListVideos />} />
-        <Route path="/videos" element={<Videos />} />
-        <Route path="/like/videos" element={<LikedVideos />} />
-        <Route path="/watchlater" element={<WatchLater />} />
-        <Route path="/history" element={<History />} />
+        {routes.map(({ path, Component, isProtected }) => (
+          <Route
+            path={path}
+            element={
+              isProtected ? (
+                <ProtectedRoute component={Component} />
+              ) : (
+                <Component />
+              )
+            }
+          />
+        ))}
       </Routes>
     </div>
   );

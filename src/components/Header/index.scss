@@ -9,6 +9,7 @@ header {
   z-index: 1;
   background-color: $white;
   @extend .flex-column;
+
   span {
     @extend .padding-half;
   }
@@ -131,6 +132,7 @@ header {
   background-color: $white;
   top: calc($spacing-unit * 5);
 }
+
 .profile::after {
   content: " ";
 

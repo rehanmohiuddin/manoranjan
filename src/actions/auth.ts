@@ -1,4 +1,5 @@
 import {
+  getUserSuccessPayload,
   loginFailurePayload,
   loginRequestPayload,
   loginSuccessPayload,
@@ -13,6 +14,12 @@ const LOGIN_FAILURE = "LOGIN_FAILURE";
 const REGISTER_REQUEST = "REGISTER_REQUEST";
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 const REGISTER_FAILURE = "REGISTER_FAILURE";
+
+const GET_USER_REQUEST = "GET_USER_REQUEST";
+const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+const GET_USER_FAILURE = "GET_USER_FAILURE";
+
+const LOG_OUT = "LOG_OUT";
 
 const loginRequest = (payload: loginRequestPayload) => ({
   type: LOGIN_REQUEST,
@@ -44,6 +51,19 @@ const registerFailure = (payload: registerFailurePayload) => ({
   payload: payload,
 });
 
+const getUserRequest = () => ({
+  type: GET_USER_REQUEST,
+});
+
+const getUserSuccess = (payload: getUserSuccessPayload) => ({
+  type: GET_USER_SUCCESS,
+  payload: payload,
+});
+
+const logOut = () => ({
+  type: LOG_OUT,
+});
+
 export {
   LOGIN_REQUEST,
   REGISTER_REQUEST,
@@ -51,10 +71,17 @@ export {
   LOGIN_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
+  LOG_OUT,
   loginRequest,
   loginSuccess,
   loginFailure,
   registerRequest,
   registerSuccess,
   registerFailure,
+  getUserRequest,
+  getUserSuccess,
+  logOut,
 };
