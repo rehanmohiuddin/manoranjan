@@ -5,12 +5,11 @@
   @extend .flex-row;
 
   .home-container {
-    @extend .flex-column, .padding-full;
+    @extend .flex-column;
     position: absolute;
     top: calc($spacing-unit * 10);
     left: calc($spacing-unit * 9);
     height: 74vh;
-    width: 88vw;
     overflow-y: scroll;
     .footer {
       @extend .padding-half;

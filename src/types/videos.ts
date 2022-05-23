@@ -2,7 +2,7 @@ export interface getCategoriesRequestPayload {
   chart?: string;
 }
 
-export interface getVideosRequestPayload {
+export type getVideosRequestPayload = {
   region?: string;
   chart?: string;
   snippet?: string;
@@ -10,11 +10,27 @@ export interface getVideosRequestPayload {
   maxResults?: Number;
   id?: string;
   part?: string;
-}
+};
+
+export type getChannelRequestPayload = {
+  part?: string;
+  id?: string;
+};
+
+export type getChannelSuccessPayload = getVideosSuccessPayload;
 
 export interface videoState {
   videos: {
-    items: Array<getVideoSuccessPayload>;
+    items: Array<VideoPayload>;
+    nextPageToken: string;
+    pageInfo: {
+      totalResults: Number;
+      resultsPerPage: Number;
+    };
+  };
+  allVideos: { [key: string]: VideoPayload };
+  suggestions: {
+    items: Array<VideoPayloadSuggested>;
     nextPageToken: string;
     pageInfo: {
       totalResults: Number;
@@ -29,21 +45,21 @@ export interface videoState {
   playlists: [];
   watchlater: [];
   videosToFetch: string;
+  videoDetail: VideoPayload;
+  allChannels: { [key: string]: VideoPayload };
 }
 
 export type videoAction = {
   type: string;
-  payload:
-    | getCategoriesRequestPayload
-    | getCategoriesSuccessPayload
-    | getVideoRequestPayload
-    | getVideosRequestPayload
-    | getVideosSuccessPayload
-    | getVideoSuccessPayload
-    | videoErrorPayload;
+  payload: getCategoriesRequestPayload &
+    getCategoriesSuccessPayload &
+    getVideoRequestPayload &
+    getVideosRequestPayload &
+    getVideosSuccessPayload &
+    videoErrorPayload;
 };
 
-export interface getCategoriesSuccessPayload {
+export type getCategoriesSuccessPayload = {
   kind: string;
   etag: string;
   id: string;
@@ -52,22 +68,26 @@ export interface getCategoriesSuccessPayload {
     assignable: boolean;
     channelId: string;
   };
-}
+};
 
-export interface getVideosSuccessPayload {
-  items: [getVideoSuccessPayload];
+export type getVideosSuccessPayload = {
+  items: [VideoPayload];
   nextPageToken: string;
   pageInfo: {
     totalResults: Number;
     resultsPerPage: Number;
   };
-}
+};
 
-export interface getVideoRequestPayload {
-  id: string;
-}
+export type getVideoRequestPayload = {
+  id?: string;
+  relatedToVideoId?: string;
+  type?: string;
+  maxResults?: Number;
+  part?: string;
+};
 
-export interface getVideoSuccessPayload {
+export type VideoPayload = {
   kind: string;
   etag: string;
   id: string;
@@ -103,9 +123,47 @@ export interface getVideoSuccessPayload {
     };
     defaultAudioLanguage: string;
   };
-}
+};
 
-export interface videoErrorPayload {
+export type VideoPayloadSuggested = {
+  kind: string;
+  etag: string;
+  id: { videoId: string };
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+      medium: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+      high: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+    };
+    channelTitle: string;
+    tags: [string];
+    categoryId: string;
+    liveBroadcastContent: string;
+    localized: {
+      title: string;
+      description: string;
+    };
+    defaultAudioLanguage: string;
+  };
+};
+
+export type videoErrorPayload = {
   error: {
     code: Number;
     message: string;
@@ -119,7 +177,7 @@ export interface videoErrorPayload {
       }
     ];
   };
-}
+};
 
 export interface getCategoriesRequestType {
   type: string;
@@ -134,4 +192,9 @@ export interface getVideosRequestType {
 export interface getVideoRequestType {
   type: string;
   payload: getVideoRequestPayload;
+}
+
+export interface getChannelRequestType {
+  type: string;
+  payload: getChannelRequestPayload;
 }

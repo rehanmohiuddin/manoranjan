@@ -2,11 +2,13 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { openToast, toastType } from "../actions/toast";
 import {
   getCategoriesSuccess,
+  getChannelSuccess,
   getVideoRequest,
   getVideosRequest,
   getVideosSuccess,
   getVideoSuccess,
   GET_CATEGORIES_REQUEST,
+  GET_CHANNEL_REQUEST,
   GET_VIDEOS_REQUEST,
   GET_VIDEO_REQUEST,
 } from "../actions/video";
@@ -14,6 +16,8 @@ import { YoutubeInstance } from "../AxiosInstance";
 import {
   getCategoriesRequestPayload,
   getCategoriesRequestType,
+  getChannelRequestPayload,
+  getChannelRequestType,
   getVideoRequestPayload,
   getVideoRequestType,
   getVideosRequestPayload,
@@ -21,7 +25,7 @@ import {
 } from "../types/videos";
 
 const queryPayload = {
-  key: process.env.REACT_APP_YOUTUBE_KEY,
+  key: "AIzaSyBs2aN1-oGERFtogw1__ZhLrzKsFbddRAM",
   regionCode: "IN",
 };
 
@@ -42,7 +46,15 @@ const getVideos = (payload: getVideosRequestPayload) =>
   });
 
 const getVideo = (payload: getVideoRequestPayload) =>
-  YoutubeInstance.get("/videos", {
+  YoutubeInstance.get("/search", {
+    params: {
+      ...queryPayload,
+      ...payload,
+    },
+  });
+
+const getChannel = (payload: getChannelRequestPayload) =>
+  YoutubeInstance.get("/channels", {
     params: {
       ...queryPayload,
       ...payload,
@@ -108,7 +120,7 @@ function* getVideoSaga({ type, payload }: getVideoRequestType): any {
   try {
     const response = yield call(getVideo, payload);
     yield all([
-      put(getVideoSuccess(response)),
+      put(getVideoSuccess(response.data)),
       put(
         openToast({
           open: true,
@@ -128,11 +140,27 @@ function* getVideoSaga({ type, payload }: getVideoRequestType): any {
   }
 }
 
+function* getChannelSaga({ type, payload }: getChannelRequestType): any {
+  try {
+    const response = yield call(getChannel, payload);
+    yield put(getChannelSuccess(response.data));
+  } catch (e) {
+    yield put(
+      openToast({
+        open: true,
+        message: type.split("_")[0] + " Failed",
+        type: toastType.fail,
+      })
+    );
+  }
+}
+
 function* videoSaga() {
   yield all([
     takeLatest(GET_CATEGORIES_REQUEST, getCategoriesSaga),
     takeLatest(GET_VIDEO_REQUEST, getVideoSaga),
     takeLatest(GET_VIDEOS_REQUEST, getVideosSaga),
+    takeLatest(GET_CHANNEL_REQUEST, getChannelSaga),
   ]);
 }
 

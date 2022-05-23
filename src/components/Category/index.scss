@@ -4,10 +4,9 @@
 .categories-container {
   @extend .flex-row, .gap-1, .padding-full, .flex-start;
   overflow: auto;
-  width: calc($spacing-unit * 80);
+  width: calc($spacing-unit * 78);
   flex-wrap: nowrap;
   overflow-x: auto;
-  margin-top: calc($spacing-unit * 1);
 
   .category {
     @extend .padding-half;

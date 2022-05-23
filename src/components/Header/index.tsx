@@ -17,16 +17,23 @@ import { BUTTON } from "../../util/constants";
 import Logo from "../../assets/Manoranjan.png";
 import Button from "../Button";
 import Category from "../../components/Category";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { videoState } from "../../types/videos";
+import { getCategoriesRequest } from "../../actions/video";
 
 function Header() {
   const [showMobNav, setMobNav] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { categories = [] } = useSelector(
     (state: { video: videoState }) => state.video
   );
   const isLoggedIn = false;
+
+  useEffect(() => {
+    dispatch(getCategoriesRequest({ chart: "mostPopular" }));
+  }, []);
+
   const renderHeaderBody = () => (
     <>
       <div className="search-continer">
