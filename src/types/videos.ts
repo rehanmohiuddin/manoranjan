@@ -68,6 +68,7 @@ export interface videoState {
   };
   videoIds: [string];
   categories: Array<getCategoriesSuccessPayload>;
+  allCategories: { [key: string]: getCategoriesSuccessPayload };
   loading: boolean;
   likes: [];
   history: [];

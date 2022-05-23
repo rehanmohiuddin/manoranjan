@@ -4,8 +4,8 @@
 header {
   position: fixed;
   top: 0;
-  left: calc($spacing-unit * 9);
-  width: 92vw;
+  left: calc($spacing-unit * 11);
+  width: 90vw;
   z-index: 1;
   background-color: $white;
   @extend .flex-column;

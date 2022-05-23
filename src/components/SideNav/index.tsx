@@ -6,6 +6,7 @@ import {
   faArrowCircleLeft,
   faClock,
   faHeart,
+  faHistory,
   faHome,
   faPencil,
   faRankingStar,
@@ -23,6 +24,7 @@ function Index() {
     { route: "/playlist", icon: faRankingStar, name: "PlayLists" },
     { route: "/like/videos", icon: faHeart, name: "Liked" },
     { route: "/watchlater", icon: faClock, name: "Watch Later" },
+    { route: "/history", icon: faHistory, name: "History" },
   ];
   return (
     <nav>

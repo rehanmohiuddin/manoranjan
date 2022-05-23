@@ -11,7 +11,12 @@ import {
   GET_VIDEO_REQUEST,
   GET_VIDEO_SUCCESS,
 } from "../actions/video";
-import { videoAction, VideoPayload, videoState } from "../types/videos";
+import {
+  getCategoriesSuccessPayload,
+  videoAction,
+  VideoPayload,
+  videoState,
+} from "../types/videos";
 
 export default (state: videoState, action: videoAction) => {
   const { type, payload } = action;
@@ -34,6 +39,7 @@ export default (state: videoState, action: videoAction) => {
       };
     case GET_CHANNEL_SUCCESS:
       const _allChannels: { [key: string]: VideoPayload } = {};
+
       payload.items.forEach((item) => {
         _allChannels[item.id] = item;
       });
@@ -43,9 +49,14 @@ export default (state: videoState, action: videoAction) => {
         allChannels: _allChannels,
       };
     case GET_CATEGORIES_SUCCESS:
+      const _allCategories: { [key: string]: any } = {};
+      payload.items.forEach((category) => {
+        _allCategories[category.id] = category;
+      });
       return {
         ...state,
-        categories: payload,
+        categories: payload.items,
+        allCategories: _allCategories,
       };
     case GET_VIDEOS_SUCCESS:
       const _allVideos: { [key: string]: VideoPayload } = {};

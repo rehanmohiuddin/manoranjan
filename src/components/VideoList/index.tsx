@@ -28,6 +28,11 @@ import {
   addToWatchLaterVideosRequest,
   removeFromWatchLaterVideosRequest,
 } from "../../actions/watchlater";
+import { historyState } from "../../types/history";
+import {
+  addToHistoryVideosRequest,
+  removeFromHistoryVideosRequest,
+} from "../../actions/history";
 
 function Index({
   title,
@@ -50,12 +55,16 @@ function Index({
     (state: { playlist: playlistState }) => state.playlist
   );
 
-  const { likedVideos = [], allLikedVideos = {} } = useSelector(
+  const { allLikedVideos = {} } = useSelector(
     (state: { likes: likeVideosState }) => state.likes
   );
 
   const { allwatchlaterVideos = {} } = useSelector(
     (state: { watchlater: watchLaterState }) => state.watchlater
+  );
+
+  const { allhistoryVideos = {} } = useSelector(
+    (state: { history: historyState }) => state.history
   );
 
   const dispatch = useDispatch();
@@ -101,9 +110,18 @@ function Index({
         />
       </div>
     ),
-    [FROM.HISTORY]: () => (
+    [FROM.HISTORY]: (video: VideoPayload) => (
       <div>
-        <FontAwesomeIcon icon={faClock} />
+        <FontAwesomeIcon
+          onClick={() =>
+            dispatch(
+              allhistoryVideos[video.id]
+                ? removeFromHistoryVideosRequest({ video: video })
+                : addToHistoryVideosRequest({ video: video })
+            )
+          }
+          icon={faTrash}
+        />
       </div>
     ),
     [FROM.PLAYLIST]: (video: VideoPayload) => (

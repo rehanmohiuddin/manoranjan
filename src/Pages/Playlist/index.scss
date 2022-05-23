@@ -1,16 +1,6 @@
 @use "../../styles/util.scss";
 @import "../../styles/variables.scss";
 
-.delete-container {
-  @extend .flex-row, .flex-end;
-  width: 100%;
-
-  .btn {
-    background-color: $primary-red;
-    color: $white;
-    border: none;
-  }
-}
 .playlists {
   @extend .flex-row, .padding-half, .gap-1;
   flex-wrap: wrap;
