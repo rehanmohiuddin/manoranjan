@@ -4,22 +4,31 @@ import React, { forwardRef, useEffect, useRef, useState } from "react";
 import "./index.scss";
 
 interface Props {
-  trigger: React.ReactNode;
-  Open: boolean;
+  trigger?: React.ReactNode;
+  Open?: boolean;
   children: React.ReactNode;
   header: string;
+  ref?: { current: any };
+  close?: any;
 }
 
-const Modal = ({ children, trigger, header, Open }: Props) => {
+const Modal = ({ children, trigger, header, Open, close }: Props) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const closeModal = () => {
     setOpen(false);
+    close();
   };
 
   const open = () => setOpen(true);
 
   useEffect(() => {
-    Open && open();
+    return () => {
+      setOpen(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    Open && setOpen(Open);
   }, [Open]);
 
   return (

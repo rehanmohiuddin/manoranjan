@@ -15,23 +15,32 @@
   }
   .video-list {
     @extend .padding-full, .gap-1;
+    .empty-message {
+      text-align: center;
+      a {
+        text-decoration: underline;
+      }
+    }
     display: grid;
     grid-template-columns: repeat(
       auto-fit,
-      minmax(calc($spacing-unit * 16), 1fr)
+      minmax(calc($spacing-unit * 18), 0fr)
     );
     max-width: calc($spacing-unit * 80);
     scroll-snap-type: x mandatory;
     overflow: auto;
     a {
       color: $black;
+      padding: 0;
     }
     .video {
+      @extend .padding-full;
       scroll-snap-align: start;
       text-align: left;
       background-color: $white;
       box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem $light-gray;
       border-radius: calc($spacing-unit * 0.3);
+
       img {
         width: 100%;
       }
@@ -50,9 +59,13 @@
       .video-bottom {
         @extend .flex-row, .flex-space-between;
         width: 100%;
-        svg,
-        .video-channel {
-          @extend .padding-half;
+        div {
+          @extend .flex-row;
+          svg,
+          .video-channel {
+            @extend .padding-half;
+            width: calc($spacing-unit * 1.4);
+          }
         }
         svg {
           font-size: calc($spacing-unit * 1.2);
@@ -67,6 +80,15 @@
     .video-thumbnail {
       width: calc($spacing-unit * 15);
     }
+  }
+  .select-playlists {
+    width: 100%;
+    outline: none;
+    border: 1px solid $dark-gray;
+    padding: calc($spacing-unit * 1);
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+    margin-bottom: calc($spacing-unit * 1);
   }
 }
 

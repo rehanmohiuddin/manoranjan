@@ -5,4 +5,10 @@ const BUTTON = {
   LINK: "LINK",
 };
 
-export { BUTTON };
+const FROM = {
+  PLAYLIST: "PLAYLIST",
+  HOME: "HOME",
+  HISTORY: "HISTORY",
+};
+
+export { BUTTON, FROM };

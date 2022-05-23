@@ -5,6 +5,7 @@ import HomeContainer from "../../components/HomeContainer";
 import { videoState } from "../../types/videos";
 import VideoList from "../../components/VideoList";
 import "./index.scss";
+import { getAllPlaylists } from "../../actions/playlist";
 
 function Index() {
   const dispatch = useDispatch();

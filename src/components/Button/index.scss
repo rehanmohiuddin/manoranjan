@@ -8,6 +8,9 @@ div {
     white-space: nowrap;
     border-radius: 0.2rem;
   }
+  svg {
+    margin-right: calc($spacing-unit * 0.3);
+  }
   .btn-primary {
     background-color: $dark-gray;
     color: $white;
