@@ -30,6 +30,9 @@ nav {
       color: $dark-gray;
       width: 75%;
     }
+    a {
+      white-space: nowrap;
+    }
     a:hover {
       background-color: $pale-gray;
     }

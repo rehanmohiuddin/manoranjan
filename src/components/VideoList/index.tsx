@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "./index.scss";
-import { VideoPayload } from "../../types/videos";
+import { likeVideosState, VideoPayload } from "../../types/videos";
+import { watchLaterState } from "../../types/watchlater";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faPlus,
+  faThumbsUp,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import AddToPlaylistIcon from "../../assets/playlist.svg";
 import Modal from "../Modal";
 import Button from "../Button";
@@ -14,6 +20,14 @@ import {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
 } from "../../actions/playlist";
+import {
+  addToLikeVideosRequest,
+  removeFromLikeVideosRequest,
+} from "../../actions/likes";
+import {
+  addToWatchLaterVideosRequest,
+  removeFromWatchLaterVideosRequest,
+} from "../../actions/watchlater";
 
 function Index({
   title,
@@ -36,11 +50,33 @@ function Index({
     (state: { playlist: playlistState }) => state.playlist
   );
 
+  const { likedVideos = [], allLikedVideos = {} } = useSelector(
+    (state: { likes: likeVideosState }) => state.likes
+  );
+
+  const { allwatchlaterVideos = {} } = useSelector(
+    (state: { watchlater: watchLaterState }) => state.watchlater
+  );
+
   const dispatch = useDispatch();
 
   const renderVideoActions = {
     [FROM.HOME]: (video: VideoPayload) => (
       <div>
+        <div
+          onClick={() =>
+            dispatch(
+              allLikedVideos[video.id]
+                ? removeFromLikeVideosRequest({ video: video })
+                : addToLikeVideosRequest({ video: video })
+            )
+          }
+        >
+          <FontAwesomeIcon
+            className={allLikedVideos[video.id] ? "action-active" : ""}
+            icon={faThumbsUp}
+          />
+        </div>
         <div
           onClick={() =>
             setPlaylistAction({
@@ -52,7 +88,17 @@ function Index({
         >
           <AddToPlaylistIcon />
         </div>
-        <FontAwesomeIcon icon={faClock} />
+        <FontAwesomeIcon
+          className={allwatchlaterVideos[video.id] ? "action-active" : ""}
+          onClick={() =>
+            dispatch(
+              allwatchlaterVideos[video.id]
+                ? removeFromWatchLaterVideosRequest({ video: video })
+                : addToWatchLaterVideosRequest({ video: video })
+            )
+          }
+          icon={faClock}
+        />
       </div>
     ),
     [FROM.HISTORY]: () => (
@@ -65,6 +111,14 @@ function Index({
         <div onClick={() => callBackData({ video: video })}>
           <FontAwesomeIcon icon={faTrash} />
         </div>
+      </div>
+    ),
+    [FROM.LIKES]: (video: VideoPayload) => (
+      <div>
+        <div onClick={() => dispatch(addToLikeVideosRequest({ video: video }))}>
+          <FontAwesomeIcon icon={faThumbsUp} />
+        </div>
+        <FontAwesomeIcon icon={faClock} />
       </div>
     ),
   };

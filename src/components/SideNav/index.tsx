@@ -4,6 +4,8 @@ import Logo from "../../assets/icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleLeft,
+  faClock,
+  faHeart,
   faHome,
   faPencil,
   faRankingStar,
@@ -19,6 +21,8 @@ function Index() {
     { route: "/", icon: faHome, name: "Home" },
     { route: "/videos", icon: faPencil, name: "Videos" },
     { route: "/playlist", icon: faRankingStar, name: "PlayLists" },
+    { route: "/like/videos", icon: faHeart, name: "Liked" },
+    { route: "/watchlater", icon: faClock, name: "Watch Later" },
   ];
   return (
     <nav>

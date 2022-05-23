@@ -49,28 +49,26 @@ function PlayListVideos() {
 
   return (
     <HomeContainer>
-      <div className="playlist-container">
-        <div className="delete-container">
-          <Button
-            callBack={deletePlaylistHandler}
-            type={BUTTON.BUTTON}
-            style={BUTTON.OUTLINE}
-          >
-            <div className="delete-btn">
-              <FontAwesomeIcon icon={faTrash} />
-              Delete
-            </div>
-          </Button>
-        </div>
-        {allPlaylists[playList_id] && (
-          <VideoList
-            from={FROM.PLAYLIST}
-            callBackData={removePlaylistVideoHandler}
-            title={`Videos of Playlist ${allPlaylists[playList_id].name}`}
-            items={allPlaylists[playList_id].videos}
-          />
-        )}
+      <div className="delete-container">
+        <Button
+          callBack={deletePlaylistHandler}
+          type={BUTTON.BUTTON}
+          style={BUTTON.OUTLINE}
+        >
+          <div className="delete-btn">
+            <FontAwesomeIcon icon={faTrash} />
+            Delete
+          </div>
+        </Button>
       </div>
+      {allPlaylists[playList_id] && (
+        <VideoList
+          from={FROM.PLAYLIST}
+          callBackData={removePlaylistVideoHandler}
+          title={`Videos of Playlist ${allPlaylists[playList_id].name}`}
+          items={allPlaylists[playList_id].videos}
+        />
+      )}
     </HomeContainer>
   );
 }
