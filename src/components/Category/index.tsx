@@ -14,7 +14,6 @@ function Index({
   const { allCategories } = useSelector(
     (state: { video: videoState }) => state.video
   );
-  console.log(allCategories[activeCategory] ? "category active" : "category");
   return (
     <div className="categories-container">
       {categories.map((category) => (

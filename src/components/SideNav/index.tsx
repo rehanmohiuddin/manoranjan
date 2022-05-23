@@ -22,9 +22,10 @@ import { authState } from "../../types/auth";
 function Index() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoggedIn = false } = useSelector(
+  const { isLoggedIn = false, user } = useSelector(
     (state: { auth: authState }) => state.auth
   );
+  const { firstName = "" } = user ?? {};
   const navRoutes = [
     { route: "/", icon: faHome, name: "Home" },
     { route: "/videos", icon: faPencil, name: "Videos" },
@@ -41,7 +42,7 @@ function Index() {
 
   return (
     <nav>
-      <button>{"R".charAt(0)}</button>
+      <button>{firstName.charAt(0)}</button>
       <div className="nav-icons">
         {navRoutes.map(({ route, icon, name }) => (
           <NavLink
