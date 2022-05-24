@@ -13,7 +13,9 @@ const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleWare) =>
-    getDefaultMiddleWare().concat(sagaMiddleware).concat(logger),
+    process.env.NODE_ENV === "production"
+      ? getDefaultMiddleWare().concat(sagaMiddleware)
+      : getDefaultMiddleWare().concat(sagaMiddleware).concat(logger),
 });
 
 // Run the saga
