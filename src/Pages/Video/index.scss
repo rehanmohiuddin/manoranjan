@@ -21,6 +21,9 @@
       @extend .flex-row, .flex-space-between, .padding-full;
       .actions {
         @extend .flex-row, .gap-1;
+        .active {
+          color: $primary-red;
+        }
         div {
           align-items: center;
           cursor: pointer;

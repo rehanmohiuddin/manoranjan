@@ -24,7 +24,7 @@ export interface deletePlayListPayload {
 }
 
 export interface playlistState {
-  playlists: [string];
+  playlists: string[];
   allPlaylists: {
     [key: string]: { _id: string; name: string; videos: Array<VideoPayload> };
   };

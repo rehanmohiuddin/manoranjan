@@ -86,15 +86,6 @@
       width: calc($spacing-unit * 15);
     }
   }
-  .select-playlists {
-    width: 100%;
-    outline: none;
-    border: 1px solid $dark-gray;
-    padding: calc($spacing-unit * 1);
-    font-family: "Poppins", sans-serif;
-    cursor: pointer;
-    margin-bottom: calc($spacing-unit * 1);
-  }
 }
 
 @media screen and (max-width: $medium) {

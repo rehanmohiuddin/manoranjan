@@ -7,7 +7,12 @@ import {
 import { likeAction, likeVideosState, VideoPayload } from "../types/videos";
 import { historyAction, historyState } from "../types/history";
 
-export default (state: historyState, action: historyAction) => {
+const initialState: historyState = {
+  historyVideos: [],
+  allhistoryVideos: {},
+};
+
+export default (state: historyState = initialState, action: historyAction) => {
   const { type, payload } = action;
 
   switch (type) {

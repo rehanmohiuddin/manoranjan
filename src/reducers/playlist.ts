@@ -11,7 +11,15 @@ import {
 } from "../actions/playlist";
 import { playlistAction, playlistState } from "../types/playlist";
 
-export default (state: playlistState, action: playlistAction) => {
+const initialState: playlistState = {
+  playlists: [],
+  allPlaylists: {},
+};
+
+export default (
+  state: playlistState = initialState,
+  action: playlistAction
+) => {
   const { type, payload } = action;
   const { playlists = [], allPlaylists = {} } = state ?? {};
   const _allPlaylists = { ...allPlaylists };

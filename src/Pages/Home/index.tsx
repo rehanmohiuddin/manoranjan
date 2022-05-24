@@ -13,6 +13,7 @@ import { BUTTON } from "../../util/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { getUserRequest } from "../../actions/auth";
+import { getAllHistoryVideosRequest } from "../../actions/history";
 
 const Index: React.FC = function () {
   const dispatch = useDispatch();
@@ -34,9 +35,6 @@ const Index: React.FC = function () {
       : { chart: "mostPopular", maxResults: 10 };
 
     dispatch(getVideosRequest(query));
-    dispatch(getAllLikedVideosRequest());
-    dispatch(getAllWatchLaterVideosRequest());
-    dispatch(getUserRequest());
   }, [category]);
 
   useEffect(() => {

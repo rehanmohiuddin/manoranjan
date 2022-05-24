@@ -172,10 +172,7 @@ function Index({
                       />
                       <div className="video-title">{video.snippet.title}</div>
                     </Link>
-                    <div
-                      className="video-bottom"
-                      onClick={() => isLoggedIn && navigate("/login")}
-                    >
+                    <div className="video-bottom">
                       <div className="video-channel">
                         {video.snippet.channelTitle}
                       </div>
