@@ -68,7 +68,7 @@ function* getCategoriesSaga({ type, payload }: getCategoriesRequestType): any {
   try {
     const response = yield call(getCategories, payload);
     yield all([
-      put(getCategoriesSuccess(response.data.items)),
+      put(getCategoriesSuccess(response.data)),
       put(
         openToast({
           open: true,

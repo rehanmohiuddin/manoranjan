@@ -18,6 +18,7 @@ import {
   faThumbsDown,
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
+import { addToHistoryVideosRequest } from "../../actions/history";
 
 function Index() {
   const [params] = useSearchParams();
@@ -71,6 +72,10 @@ function Index() {
     },
   };
 
+  const addToHistoryHandler = () => {
+    dispatch(addToHistoryVideosRequest({ video: allVideos[videoId] }));
+  };
+
   useEffect(() => {
     videoId && video.getVideos().getChannel().getSuggestions();
   }, [videoId]);
@@ -79,7 +84,12 @@ function Index() {
     <HomeContainer>
       <div className="video-container">
         <div className="video-left">
-          <YouTube className="video" videoId={videoId} opts={opts} />
+          <YouTube
+            className="video"
+            videoId={videoId}
+            opts={opts}
+            onPlay={addToHistoryHandler}
+          />
           <div className="title">{snippet.title}</div>
           <div className="video-actions">
             <div className="published-at">

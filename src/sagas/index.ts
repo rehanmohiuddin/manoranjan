@@ -4,6 +4,7 @@ import videoSaga from "./video";
 import playlistSaga from "./playlist";
 import likesSaga from "./likes";
 import watchlaterSaga from "./watchlater";
+import historySaga from "./history";
 
 function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ function* rootSaga() {
     fork(playlistSaga),
     fork(likesSaga),
     fork(watchlaterSaga),
+    fork(historySaga),
   ]);
 }
 

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
+import history from "./history";
 import likes from "./likes";
 import playlist from "./playlist";
 import toast from "./toast";
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   playlist: playlist,
   likes: likes,
   watchlater: watchlater,
+  history: history,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

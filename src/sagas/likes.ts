@@ -9,30 +9,8 @@ import {
   REMOVE_ALL_LIKED_VIDEOS_REQUEST,
   REMOVE_FROM_LIKE_VIDEOS_REQUEST,
 } from "../actions/likes";
-import {
-  addVideoToPlaylistSuccess,
-  ADD_VIDEO_TO_PLAYLIST,
-  createPlaylistSuccess,
-  CREATE_PLAYLIST,
-  deletePlaylistSuccess,
-  DELETE_PLAYLIST,
-  fetchAllPlaylistsSuccess,
-  GET_ALL_PLAYLISTS,
-  removeVideofromPlaylistSuccess,
-  REMOVE_VIDEO_FROM_PLAYLIST,
-} from "../actions/playlist";
 import { openToast, toastType } from "../actions/toast";
-import {
-  addplayListVideoPayload,
-  addPlaylistVideoRequest,
-  createPlayListPayload,
-  createPlaylistRequest,
-  deletePlayListPayload,
-  deletePlaylistRequest,
-  deleteplayListVideoPayload,
-  deletePlaylistVideoRequest,
-  fetchPlaylistsRequest,
-} from "../types/playlist";
+
 import {
   getAllLikedVideosRequestType,
   likeVideoPayload,
@@ -46,11 +24,16 @@ const getData = () => JSON.parse(localStorage.getItem("user") ?? "");
 const addToDb = ({ key, data }: { key: string; data: any }) =>
   localStorage.setItem("user", JSON.stringify({ ...getData(), [key]: data }));
 
-const addToLikeVideos = (payload: likeVideoPayload) =>
-  addToDb({
-    key: "likes",
-    data: [payload.video, ...getData().likes],
-  });
+const addToLikeVideos = (payload: likeVideoPayload) => {
+  const index = getData().likes.findIndex(
+    (video: VideoPayload) => video.id === payload.video.id
+  );
+  index < 0 &&
+    addToDb({
+      key: "likes",
+      data: [payload.video, ...getData().likes],
+    });
+};
 
 const removeFromLikeVideos = (payload: likeVideoPayload) => {
   const likedVideos = [

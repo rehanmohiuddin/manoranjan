@@ -8,3 +8,13 @@
 .next-page {
   height: calc($spacing-unit * 1);
 }
+.delete-container {
+  @extend .flex-row, .flex-end;
+  width: 95%;
+
+  .btn {
+    background-color: $primary-red;
+    color: $white;
+    border: none;
+  }
+}

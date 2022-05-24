@@ -16,6 +16,7 @@
     height: 100%;
     text-align: left;
     @extend .padding-full;
+    margin-left: calc($spacing-unit * 1);
     .video-actions {
       @extend .flex-row, .flex-space-between, .padding-full;
       .actions {

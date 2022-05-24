@@ -8,9 +8,9 @@
     @extend .flex-column;
     position: absolute;
     top: calc($spacing-unit * 10);
-    left: calc($spacing-unit * 9);
+    left: calc($spacing-unit * 10);
     height: 74vh;
-    width: 90vw;
+    width: 89vw;
     overflow-y: scroll;
     .footer {
       @extend .padding-half;

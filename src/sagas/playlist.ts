@@ -25,22 +25,22 @@ import {
 } from "../types/playlist";
 import { VideoPayload } from "../types/videos";
 
-const local_data = JSON.parse(localStorage.getItem("user") ?? "");
+const getData = () => JSON.parse(localStorage.getItem("user") ?? "");
 
 const addToDb = ({ key, data }: { key: string; data: any }) =>
-  localStorage.setItem("user", JSON.stringify({ ...local_data, [key]: data }));
+  localStorage.setItem("user", JSON.stringify({ ...getData(), [key]: data }));
 
-const getAllPlaylists = () => local_data.playlists;
+const getAllPlaylists = () => getData().playlists;
 
 const createPlaylist = (payload: createPlayListPayload) =>
   addToDb({
     key: "playlists",
-    data: [{ ...payload, videos: [] }, ...local_data.playlists],
+    data: [{ ...payload, videos: [] }, ...getData().playlists],
   });
 
 const deletePlaylist = (payload: deletePlayListPayload) => {
   const playlists = [
-    ...local_data.playlists.filter(
+    ...getData().playlists.filter(
       (playlist: { _id: string }) => playlist._id !== payload._id
     ),
   ];
@@ -51,13 +51,19 @@ const deletePlaylist = (payload: deletePlayListPayload) => {
 };
 
 const addVideoToPlaylist = (payload: addplayListVideoPayload) => {
-  const myPlaylists = local_data.playlists;
+  const myPlaylists = getData().playlists;
   const videosIndex = myPlaylists.findIndex(
     (playlist: { _id: string }) => playlist._id === payload._id
   );
+  const index = getData().playlists[videosIndex].videos.findIndex(
+    (video: VideoPayload) => video.id === payload.video.id
+  );
   myPlaylists[videosIndex] = {
     ...myPlaylists[videosIndex],
-    videos: [payload.video, ...myPlaylists[videosIndex].videos],
+    videos:
+      index < 0
+        ? [payload.video, ...myPlaylists[videosIndex].videos]
+        : [...myPlaylists[videosIndex].videos],
   };
   addToDb({
     key: "playlists",
@@ -66,7 +72,7 @@ const addVideoToPlaylist = (payload: addplayListVideoPayload) => {
 };
 
 const removeVideoFromPlaylist = (payload: deleteplayListVideoPayload) => {
-  const myPlaylists = local_data.playlists;
+  const myPlaylists = getData().playlists;
   const videosIndex = myPlaylists.findIndex(
     (playlist: { _id: string }) => playlist._id === payload._id
   );

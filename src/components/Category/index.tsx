@@ -11,7 +11,7 @@ function Index({
   return (
     <div className="categories-container">
       {categories.map((category) => (
-        <Link to="/" className="category">
+        <Link to={"/?category=" + category.id} className="category">
           {category.snippet.title}
         </Link>
       ))}
