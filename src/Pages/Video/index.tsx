@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import HomeContainer from "../../components/HomeContainer";
 import "./index.scss";
@@ -35,7 +35,7 @@ import { BUTTON } from "../../util/constants";
 import { addVideoToPlaylist } from "../../actions/playlist";
 
 function Index() {
-  const [params] = useSearchParams();
+  const location = useLocation();
   const {
     suggestions = { items: [] },
     allVideos = {},
@@ -56,7 +56,7 @@ function Index() {
     open: boolean;
   }>({ _id: "", video: {}, open: false });
 
-  const videoId = params.get("v") ?? "";
+  const videoId = location.pathname.split("/")[2] ?? "";
   const {
     snippet = { title: "", description: "", channelId: "", channelTitle: "" },
   } = allVideos[videoId] ?? {};

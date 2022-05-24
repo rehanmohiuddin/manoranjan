@@ -165,7 +165,7 @@ function Index({
               {video.snippet && (
                 <>
                   <div className="video">
-                    <Link to={`/watch?v=${video.id}`}>
+                    <Link to={`/watch/${video.id}`}>
                       <img
                         src={video.snippet.thumbnails.high.url}
                         className="video-thumbnail"

@@ -31,7 +31,7 @@ function App() {
       Component: Register,
     },
     {
-      path: "/watch",
+      path: "/watch/:v",
       Component: Watch,
       isProtected: true,
     },
