@@ -25,7 +25,7 @@ const login = (payload: loginRequestPayload) =>
   AxiosInstance.post("/login", payload);
 
 const register = (payload: registerRequestPayload) =>
-  AxiosInstance.post("/register", payload);
+  AxiosInstance.post("/open/register", payload);
 
 const getUser = () =>
   localStorage.getItem("user")
