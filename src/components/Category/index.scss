@@ -17,6 +17,10 @@
     cursor: pointer;
     border-radius: 0.2rem;
   }
+  .active {
+    background-color: $dark-gray;
+    color: $white;
+  }
   .category:hover {
     background-color: $dark-gray;
     color: $white;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./index.scss";
 import { likeVideosState, VideoPayload } from "../../types/videos";
 import { watchLaterState } from "../../types/watchlater";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
@@ -33,6 +33,7 @@ import {
   addToHistoryVideosRequest,
   removeFromHistoryVideosRequest,
 } from "../../actions/history";
+import { authState } from "../../types/auth";
 
 function Index({
   title,
@@ -50,6 +51,12 @@ function Index({
     video: any;
     open: boolean;
   }>({ _id: "", video: {}, open: false });
+
+  const navigate = useNavigate();
+
+  const { isLoggedIn = false } = useSelector(
+    (state: { auth: authState }) => state.auth
+  );
 
   const { playlists = [], allPlaylists } = useSelector(
     (state: { playlist: playlistState }) => state.playlist
@@ -158,7 +165,7 @@ function Index({
               {video.snippet && (
                 <>
                   <div className="video">
-                    <Link to={`/watch?v=${video.id}`}>
+                    <Link to={`/watch/${video.id}`}>
                       <img
                         src={video.snippet.thumbnails.high.url}
                         className="video-thumbnail"
@@ -169,7 +176,7 @@ function Index({
                       <div className="video-channel">
                         {video.snippet.channelTitle}
                       </div>
-                      {renderVideoActions[from](video)}
+                      {isLoggedIn && renderVideoActions[from](video)}
                     </div>
                   </div>
                 </>

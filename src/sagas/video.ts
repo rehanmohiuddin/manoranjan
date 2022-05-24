@@ -28,7 +28,7 @@ import {
 } from "../types/videos";
 
 const queryPayload = {
-  key: "AIzaSyBs2aN1-oGERFtogw1__ZhLrzKsFbddRAM",
+  key: process.env.REACT_APP_YOUTUBE_KEY,
   regionCode: "IN",
 };
 

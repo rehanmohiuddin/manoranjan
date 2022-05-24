@@ -72,6 +72,11 @@ export interface loginFailurePayload {
   error: string;
 }
 
+export interface getUserSuccessPayload {
+  user: Login;
+  isLoggedIn: boolean;
+}
+
 export interface authState {
   loading: boolean;
   isLoggedIn: boolean;
@@ -86,12 +91,15 @@ export interface authState {
 
 export type authActions = {
   type: string;
-  payload:
-    | loginRequestPayload
-    | loginSuccessPayload
-    | loginFailurePayload
-    | registerRequestPayload
-    | registersuccessPayload
-    | registerFailurePayload
-    | loaderPayload;
+  payload: loginRequestPayload &
+    loginSuccessPayload &
+    loginFailurePayload &
+    registerRequestPayload &
+    registersuccessPayload &
+    registerFailurePayload &
+    loaderPayload;
 };
+
+export interface getUserRequestType {
+  type: string;
+}

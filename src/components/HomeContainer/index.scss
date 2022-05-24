@@ -14,16 +14,23 @@
     overflow-y: scroll;
     .footer {
       @extend .padding-half;
+      a {
+        color: $dark-gray;
+        font-weight: 600;
+      }
     }
   }
   @media screen and (max-width: $medium) {
     header {
       left: 0;
-
-      width: 100vw;
+      width: 95vw;
+    }
+    .desktop {
+      display: none;
     }
     .home-container {
       left: 0;
+      width: 100vw;
     }
   }
 }

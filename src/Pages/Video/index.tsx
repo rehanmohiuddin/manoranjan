@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import HomeContainer from "../../components/HomeContainer";
 import "./index.scss";
-import VideoList from "../../components/VideoList";
 import { useDispatch, useSelector } from "react-redux";
-import { videoState } from "../../types/videos";
+import { likeVideosState, VideoPayload, videoState } from "../../types/videos";
 import {
   getChannelRequest,
   getVideoRequest,
@@ -15,19 +14,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
   faPlayCircle,
+  faPlus,
   faThumbsDown,
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { addToHistoryVideosRequest } from "../../actions/history";
+import { watchLaterState } from "../../types/watchlater";
+import {
+  addToLikeVideosRequest,
+  removeFromLikeVideosRequest,
+} from "../../actions/likes";
+import {
+  addToWatchLaterVideosRequest,
+  removeFromWatchLaterVideosRequest,
+} from "../../actions/watchlater";
+import Modal from "../../components/Modal";
+import Button from "../../components/Button";
+import { playlistState } from "../../types/playlist";
+import { BUTTON } from "../../util/constants";
+import { addVideoToPlaylist } from "../../actions/playlist";
 
 function Index() {
-  const [params] = useSearchParams();
+  const location = useLocation();
   const {
     suggestions = { items: [] },
     allVideos = {},
     allChannels = {},
   } = useSelector((state: { video: videoState }) => state.video);
-  const videoId = params.get("v") ?? "";
+  const { allLikedVideos = {} } = useSelector(
+    (state: { likes: likeVideosState }) => state.likes
+  );
+  const { allwatchlaterVideos } = useSelector(
+    (state: { watchlater: watchLaterState }) => state.watchlater
+  );
+  const { playlists = [], allPlaylists = {} } = useSelector(
+    (state: { playlist: playlistState }) => state.playlist
+  );
+  const [playlistAction, setPlaylistAction] = useState<{
+    _id: string;
+    video: any;
+    open: boolean;
+  }>({ _id: "", video: {}, open: false });
+
+  const videoId = location.pathname.split("/")[2] ?? "";
   const {
     snippet = { title: "", description: "", channelId: "", channelTitle: "" },
   } = allVideos[videoId] ?? {};
@@ -36,7 +65,6 @@ function Index() {
     height: "500",
     width: "900",
     playerVars: {
-      // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
     },
   };
@@ -80,6 +108,29 @@ function Index() {
     videoId && video.getVideos().getChannel().getSuggestions();
   }, [videoId]);
 
+  const videoAction = {
+    like: () => {
+      dispatch(
+        allLikedVideos[videoId]
+          ? removeFromLikeVideosRequest({ video: allVideos[videoId] })
+          : addToLikeVideosRequest({ video: allVideos[videoId] })
+      );
+    },
+    watchlater: () => {
+      dispatch(
+        allwatchlaterVideos[videoId]
+          ? removeFromWatchLaterVideosRequest({ video: allVideos[videoId] })
+          : addToWatchLaterVideosRequest({ video: allVideos[videoId] })
+      );
+    },
+    playlist: () =>
+      setPlaylistAction({
+        ...playlistAction,
+        open: true,
+        video: allVideos[videoId],
+      }),
+  };
+
   return (
     <HomeContainer>
       <div className="video-container">
@@ -98,21 +149,73 @@ function Index() {
               ).toLocaleString()}
             </div>
             <div className="actions">
-              <div>
-                <FontAwesomeIcon icon={faThumbsUp} />
-                Like
+              <div onClick={videoAction.like}>
+                <FontAwesomeIcon
+                  className={allLikedVideos[videoId] ? "active" : ""}
+                  icon={faThumbsUp}
+                />
+                {allLikedVideos[videoId] ? "Liked" : "Like"}
               </div>
               <div>
                 <FontAwesomeIcon icon={faThumbsDown} />
                 DisLike
               </div>
-              <div>
+              <div onClick={videoAction.playlist}>
                 <FontAwesomeIcon icon={faPlayCircle} />
                 Add To Playlist
               </div>
-              <div>
-                <FontAwesomeIcon icon={faClock} />
-                Watch Later
+              {playlistAction.open && (
+                <Modal
+                  header="Add Video To Playlist"
+                  Open={true}
+                  close={() =>
+                    setPlaylistAction({ ...playlistAction, open: false })
+                  }
+                >
+                  <>
+                    <select
+                      onChange={(e) =>
+                        setPlaylistAction({
+                          ...playlistAction,
+                          _id: e.target.value,
+                        })
+                      }
+                      className="select-playlists"
+                    >
+                      <option>Select</option>
+                      {playlists.map((_id) => (
+                        <option value={_id}>{allPlaylists[_id].name}</option>
+                      ))}
+                    </select>
+                    <Button
+                      callBack={() => {
+                        dispatch(
+                          addVideoToPlaylist({
+                            _id: playlistAction._id,
+                            video: playlistAction.video,
+                          })
+                        );
+                        setPlaylistAction({ ...playlistAction, open: false });
+                      }}
+                      type={BUTTON.BUTTON}
+                      style={BUTTON.PRIMARY}
+                    >
+                      <div>
+                        <FontAwesomeIcon icon={faPlus} />
+                        Add
+                      </div>
+                    </Button>
+                  </>
+                </Modal>
+              )}
+              <div onClick={videoAction.watchlater}>
+                <FontAwesomeIcon
+                  className={allwatchlaterVideos[videoId] ? "active" : ""}
+                  icon={faClock}
+                />
+                {allwatchlaterVideos[videoId]
+                  ? "Added To Watch Later"
+                  : "Watch Later"}
               </div>
             </div>
           </div>

@@ -13,7 +13,15 @@ import {
 import { likeAction, likeVideosState, VideoPayload } from "../types/videos";
 import { watchLaterAction, watchLaterState } from "../types/watchlater";
 
-export default (state: watchLaterState, action: watchLaterAction) => {
+const initialState: watchLaterState = {
+  watchlaterVideos: [],
+  allwatchlaterVideos: {},
+};
+
+export default (
+  state: watchLaterState = initialState,
+  action: watchLaterAction
+) => {
   const { type, payload } = action;
 
   switch (type) {

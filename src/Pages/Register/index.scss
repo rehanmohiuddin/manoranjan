@@ -40,7 +40,7 @@
   .login-box {
     width: 50%;
     @extend .flex-column, .flex-justify-center;
-    margin-top: calc($spacing-unit * 2);
+    margin-top: calc($spacing-unit * 4);
     background-color: $white;
   }
   .login-btn {

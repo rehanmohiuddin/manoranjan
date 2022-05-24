@@ -12,8 +12,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { BUTTON } from "../../util/constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { getUserRequest } from "../../actions/auth";
+import { getAllHistoryVideosRequest } from "../../actions/history";
 
-function Index() {
+const Index: React.FC = function () {
   const dispatch = useDispatch();
   const { allCategories = {}, videos = { items: [] } } = useSelector(
     (state: { video: videoState }) => state.video
@@ -33,8 +35,6 @@ function Index() {
       : { chart: "mostPopular", maxResults: 10 };
 
     dispatch(getVideosRequest(query));
-    dispatch(getAllLikedVideosRequest());
-    dispatch(getAllWatchLaterVideosRequest());
   }, [category]);
 
   useEffect(() => {
@@ -65,6 +65,6 @@ function Index() {
       <VideoList title={header} items={videos.items} />
     </HomeContainer>
   );
-}
+};
 
 export default Index;
