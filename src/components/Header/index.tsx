@@ -22,7 +22,13 @@ import { videoState } from "../../types/videos";
 import { getCategoriesRequest } from "../../actions/video";
 import { authState } from "../../types/auth";
 
-function Header() {
+function Header({
+  showSideNav = false,
+  setSideNav,
+}: {
+  showSideNav?: boolean;
+  setSideNav?: any;
+}) {
   const [showMobNav, setMobNav] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,7 +85,7 @@ function Header() {
         </Link>
         <FontAwesomeIcon
           className="mobNav"
-          onClick={() => setMobNav(!showMobNav)}
+          onClick={() => setSideNav(!setSideNav)}
           icon={faBars}
           size="2x"
         />

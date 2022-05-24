@@ -23,11 +23,14 @@
   @media screen and (max-width: $medium) {
     header {
       left: 0;
-
-      width: 100vw;
+      width: 95vw;
+    }
+    .desktop {
+      display: none;
     }
     .home-container {
       left: 0;
+      width: 100vw;
     }
   }
 }

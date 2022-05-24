@@ -14,11 +14,7 @@ interface Props {
 }
 
 function Index({ children }: Props) {
-  const [showSideNav, setSideNav] = useState<boolean>(true);
-  const handlers = useSwipeable({
-    onSwipedRight: (eventData) => setSideNav(true),
-    onSwipedLeft: () => setSideNav(false),
-  });
+  const [showSideNav, setSideNav] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,8 +25,14 @@ function Index({ children }: Props) {
   }, []);
 
   return (
-    <div {...handlers} className="root-home-container">
-      <Header />
+    <div className="root-home-container">
+      <Header
+        showSideNav={showSideNav}
+        setSideNav={() => setSideNav(!showSideNav)}
+      />
+      <div className="desktop">
+        <Nav />
+      </div>
       {showSideNav && <Nav />}
       <div className="home-container">
         {children}

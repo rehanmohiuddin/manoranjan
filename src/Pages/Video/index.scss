@@ -18,15 +18,18 @@
     @extend .padding-full;
     margin-left: calc($spacing-unit * 1);
     .video-actions {
-      @extend .flex-row, .flex-space-between, .padding-full;
+      @extend .flex-row, .flex-space-between, .padding-full, .gap-half;
+      flex-wrap: wrap;
       .actions {
         @extend .flex-row, .gap-1;
+        flex-wrap: wrap;
         .active {
           color: $primary-red;
         }
         div {
           align-items: center;
           cursor: pointer;
+          text-align: center;
           svg {
             margin-right: calc($spacing-unit * 0.3);
             color: $dark-gray;
@@ -90,6 +93,19 @@
 @media screen and (max-width: $medium) {
   .video-container {
     flex-direction: column;
+    .video-left {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      .title {
+        padding: calc($spacing-unit * 0.5);
+        padding-left: calc($spacing-unit * 1);
+      }
+      .video {
+        height: calc($spacing-unit * 20);
+        padding: calc($spacing-unit * 1);
+      }
+    }
   }
   iframe {
     width: 100%;
