@@ -36,7 +36,13 @@ function Index({ children }: Props) {
         {children}
         <div className="footer">
           © All Right Reserved <br />
-          Powered By Youtube API
+          Powered By
+          <a
+            href={"https://developers.google.com/youtube/v3/docs"}
+            target="_blank"
+          >
+            Youtube API
+          </a>
         </div>
       </div>
     </div>
