@@ -1,67 +1,60 @@
 @use "../../styles/util.scss";
 @import "../../styles/variables.scss";
 
-.playlist-container {
-  @extend .flex-column, .padding-full;
-  padding-top: 0;
-  align-items: flex-start;
-  background-color: $white;
-  min-width: 86vw;
-  .delete-container {
-    @extend .flex-row, .flex-end;
-    width: 98%;
+.delete-container {
+  @extend .flex-row, .flex-end;
+  width: 100%;
 
-    .btn {
-      background-color: $primary-red;
-      color: $white;
-      border: none;
-    }
+  .btn {
+    background-color: $primary-red;
+    color: $white;
+    border: none;
   }
-  .playlists {
-    @extend .flex-row, .padding-half, .gap-1;
-    flex-wrap: wrap;
-    .playlist {
-      @extend .flex-column, .padding-full;
-      color: $dark-gray;
-      padding-bottom: 0;
-      box-shadow: 0.1rem 0.1rem 0.1rem $light-gray;
-      border-radius: 0.2rem;
-      img {
-        width: calc($spacing-unit * 10);
-      }
-      .title {
-        @extend .padding-half;
-        font-size: calc($spacing-unit * 1.1);
-        font-weight: 500;
-        text-transform: capitalize;
-      }
+}
+.playlists {
+  @extend .flex-row, .padding-half, .gap-1;
+  flex-wrap: wrap;
+  .playlist {
+    @extend .flex-column, .padding-full;
+    color: $dark-gray;
+    padding-bottom: 0;
+    box-shadow: 0.1rem 0.1rem 0.1rem $light-gray;
+    border-radius: 0.2rem;
+    img {
+      width: calc($spacing-unit * 10);
     }
-  }
-  .create-paylist-container {
-    @extend .flex-column;
-    align-items: flex-start;
-    label {
+    .title {
       @extend .padding-half;
-      padding-left: 0;
-      padding-top: 0;
+      font-size: calc($spacing-unit * 1.1);
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+  }
+}
+.create-paylist-container {
+  @extend .flex-column;
+  align-items: flex-start;
+  label {
+    @extend .padding-half;
+    padding-left: 0;
+    padding-top: 0;
+    font-size: calc($spacing-unit * 1);
+  }
+  .playlist-input {
+    @extend .flex-row, .padding-half;
+    width: 100%;
+    border: 1px solid $dark-gray;
+    input {
       font-size: calc($spacing-unit * 1);
+      outline: none;
+      border: none;
+      font-family: "Poppins", "sans-herif";
     }
-    .playlist-input {
-      @extend .flex-row, .padding-half;
-      width: 100%;
-      border: 1px solid $dark-gray;
-      input {
-        font-size: calc($spacing-unit * 1);
-        outline: none;
-        border: none;
-        font-family: "Poppins", "sans-herif";
-      }
-    }
-    .create-playlist-bottom {
-      @extend .flex-row, .flex-end, .gap-half, .padding-full;
-      padding-bottom: 0;
-      width: 100%;
-      font-size: calc($spacing-unit * 0.8);
-    }
+  }
+  .create-playlist-bottom {
+    @extend .flex-row, .flex-end, .gap-half, .padding-full;
+    padding-bottom: 0;
+    width: 100%;
+    font-size: calc($spacing-unit * 0.8);
   }
 }

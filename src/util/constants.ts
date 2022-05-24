@@ -9,6 +9,7 @@ const FROM = {
   PLAYLIST: "PLAYLIST",
   HOME: "HOME",
   HISTORY: "HISTORY",
+  LIKES: "LIKES",
 };
 
 export { BUTTON, FROM };

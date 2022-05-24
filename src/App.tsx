@@ -6,6 +6,9 @@ import Home from "./Pages/Home";
 import Watch from "./Pages/Video";
 import Playlist from "./Pages/Playlist";
 import PlayListVideos from "./Pages/Playlist/PlayListVideos";
+import Videos from "./Pages/Videos";
+import LikedVideos from "./Pages/LikedVideos";
+import WatchLater from "./Pages/WatchLater";
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/watch" element={<Watch />} />
         <Route path="/playlist" element={<Playlist />} />
         <Route path="/playlist/videos" element={<PlayListVideos />} />
+        <Route path="/videos" element={<Videos />} />
+        <Route path="/like/videos" element={<LikedVideos />} />
+        <Route path="/watchlater" element={<WatchLater />} />
       </Routes>
     </div>
   );

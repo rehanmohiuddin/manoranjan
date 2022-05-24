@@ -5,3 +5,6 @@
   @extend .flex-column, .gap-1;
   padding: 0;
 }
+.next-page {
+  height: calc($spacing-unit * 1);
+}

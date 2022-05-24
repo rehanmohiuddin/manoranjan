@@ -43,63 +43,61 @@ function Index() {
 
   return (
     <HomeContainer>
-      <div className="playlist-container">
-        <Button
-          callBack={() => setOpen(true)}
-          type={BUTTON.BUTTON}
-          style={BUTTON.OUTLINE}
-        >
-          <div>
-            <FontAwesomeIcon icon={faPlus} />
-            Create Playlist
-          </div>
-        </Button>
-        {open && (
-          <Modal
-            Open={true}
-            close={() => setOpen(false)}
-            ref={ref}
-            header="Create Playlist"
-          >
-            <div className="create-paylist-container">
-              <label>PlayList Name *</label>
-              <div className="playlist-input">
-                <FontAwesomeIcon icon={faPlayCircle} />{" "}
-                <input ref={name} placeholder="Ex : Lofi" />
-              </div>
-              <div className="create-playlist-bottom">
-                <Button
-                  callBack={() => setOpen(false)}
-                  type={BUTTON.BUTTON}
-                  style={BUTTON.OUTLINE}
-                >
-                  <div>
-                    <FontAwesomeIcon icon={faCancel} />
-                    Cancel
-                  </div>
-                </Button>
-                <Button
-                  callBack={createPlaylistHandler}
-                  type={BUTTON.BUTTON}
-                  style={BUTTON.PRIMARY}
-                >
-                  <div>
-                    <FontAwesomeIcon icon={faPlus} />
-                    Create
-                  </div>
-                </Button>
-              </div>
-            </div>
-          </Modal>
-        )}
-        <div className="playlists">
-          {playlists.map((_id) => (
-            <Link to={"/playlist/videos?playlist=" + _id} className="playlist">
-              <img src={playlistThumbnail} />
-              <div className="title"> {allPlaylists[_id]?.name}</div>
-            </Link>
-          ))}
+      <Button
+        callBack={() => setOpen(true)}
+        type={BUTTON.BUTTON}
+        style={BUTTON.OUTLINE}
+      >
+        <div>
+          <FontAwesomeIcon icon={faPlus} />
+          Create Playlist
         </div>
+      </Button>
+      {open && (
+        <Modal
+          Open={true}
+          close={() => setOpen(false)}
+          ref={ref}
+          header="Create Playlist"
+        >
+          <div className="create-paylist-container">
+            <label>PlayList Name *</label>
+            <div className="playlist-input">
+              <FontAwesomeIcon icon={faPlayCircle} />{" "}
+              <input ref={name} placeholder="Ex : Lofi" />
+            </div>
+            <div className="create-playlist-bottom">
+              <Button
+                callBack={() => setOpen(false)}
+                type={BUTTON.BUTTON}
+                style={BUTTON.OUTLINE}
+              >
+                <div>
+                  <FontAwesomeIcon icon={faCancel} />
+                  Cancel
+                </div>
+              </Button>
+              <Button
+                callBack={createPlaylistHandler}
+                type={BUTTON.BUTTON}
+                style={BUTTON.PRIMARY}
+              >
+                <div>
+                  <FontAwesomeIcon icon={faPlus} />
+                  Create
+                </div>
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      <div className="playlists">
+        {playlists.map((_id) => (
+          <Link to={"/playlist/videos?playlist=" + _id} className="playlist">
+            <img src={playlistThumbnail} />
+            <div className="title"> {allPlaylists[_id]?.name}</div>
+          </Link>
+        ))}
       </div>
     </HomeContainer>
   );

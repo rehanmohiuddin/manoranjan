@@ -6,6 +6,7 @@
   align-items: flex-start;
   box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem $pale-gray;
   border: 1px solid $light-gray;
+
   .video-list-title {
     @extend .padding-half;
     text-align: left;
@@ -59,12 +60,16 @@
       .video-bottom {
         @extend .flex-row, .flex-space-between;
         width: 100%;
+
         div {
           @extend .flex-row;
           svg,
           .video-channel {
             @extend .padding-half;
             width: calc($spacing-unit * 1.4);
+          }
+          .action-active {
+            color: $primary-red;
           }
         }
         svg {

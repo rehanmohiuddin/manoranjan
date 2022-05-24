@@ -2,6 +2,10 @@ export interface getCategoriesRequestPayload {
   chart?: string;
 }
 
+export interface getAllLikedVideosSuccessPayload {
+  videos: VideoPayload[];
+}
+
 export type getVideosRequestPayload = {
   region?: string;
   chart?: string;
@@ -10,11 +14,36 @@ export type getVideosRequestPayload = {
   maxResults?: Number;
   id?: string;
   part?: string;
+  pageToken?: string;
 };
 
 export type getChannelRequestPayload = {
   part?: string;
   id?: string;
+};
+
+export type likeVideoPayload = {
+  video: VideoPayload;
+};
+
+export type likeVideoSuccessPayload = {
+  video: VideoPayload;
+};
+
+export type getAllLikedVideoSuccessPayload = {
+  videos: VideoPayload[];
+};
+
+export type getAllHistoryVideoSuccessPayload = {
+  videos: VideoPayload[];
+};
+
+export type addToHistoryPayload = {
+  _id: string;
+};
+
+export type addToHistorySuccessPayload = {
+  videos: VideoPayload;
 };
 
 export type getChannelSuccessPayload = getVideosSuccessPayload;
@@ -48,6 +77,20 @@ export interface videoState {
   videoDetail: VideoPayload;
   allChannels: { [key: string]: VideoPayload };
 }
+
+export interface likeVideosState {
+  likedVideos: VideoPayload[];
+  allLikedVideos: {
+    [key: string]: { _id: string; name: string; videos: Array<VideoPayload> };
+  };
+}
+
+export type likeAction = {
+  type: string;
+  payload: likeVideoPayload &
+    likeVideoSuccessPayload &
+    getAllLikedVideoSuccessPayload;
+};
 
 export type videoAction = {
   type: string;
@@ -197,4 +240,27 @@ export interface getVideoRequestType {
 export interface getChannelRequestType {
   type: string;
   payload: getChannelRequestPayload;
+}
+
+export interface getAllLikedVideosRequestType {
+  type: string;
+}
+
+export interface getMoreVideosRequestType {
+  type: string;
+  payload: getVideosRequestPayload;
+}
+
+export interface likeVideoRequestType {
+  type: string;
+  payload: likeVideoPayload;
+}
+
+export interface addToHistoryRequestType {
+  type: string;
+  payload: addToHistoryPayload;
+}
+
+export interface removeAllLikedVideosRequestType {
+  type: string;
 }

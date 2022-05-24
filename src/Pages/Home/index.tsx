@@ -6,6 +6,8 @@ import { videoState } from "../../types/videos";
 import VideoList from "../../components/VideoList";
 import "./index.scss";
 import { getAllPlaylists } from "../../actions/playlist";
+import { getAllLikedVideosRequest } from "../../actions/likes";
+import { getAllWatchLaterVideosRequest } from "../../actions/watchlater";
 
 function Index() {
   const dispatch = useDispatch();
@@ -21,6 +23,8 @@ function Index() {
         videoCategoryId: "10",
       })
     );
+    dispatch(getAllLikedVideosRequest());
+    dispatch(getAllWatchLaterVideosRequest());
   }, []);
 
   return (

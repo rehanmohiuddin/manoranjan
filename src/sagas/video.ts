@@ -3,12 +3,14 @@ import { openToast, toastType } from "../actions/toast";
 import {
   getCategoriesSuccess,
   getChannelSuccess,
+  getMoreVideosSuccess,
   getVideoRequest,
   getVideosRequest,
   getVideosSuccess,
   getVideoSuccess,
   GET_CATEGORIES_REQUEST,
   GET_CHANNEL_REQUEST,
+  GET_MORE_VIDEOS_REQUEST,
   GET_VIDEOS_REQUEST,
   GET_VIDEO_REQUEST,
 } from "../actions/video";
@@ -18,6 +20,7 @@ import {
   getCategoriesRequestType,
   getChannelRequestPayload,
   getChannelRequestType,
+  getMoreVideosRequestType,
   getVideoRequestPayload,
   getVideoRequestType,
   getVideosRequestPayload,
@@ -95,8 +98,50 @@ function* getVideosSaga({ type, payload }: getVideosRequestType): any {
       (video: { id: string }) => (videos = videos + "," + video.id)
     );
     const videoList = yield call(getVideos, { id: videos, part: "snippet" });
+
     yield all([
-      put(getVideosSuccess({ ...videoList.data })),
+      put(
+        getVideosSuccess({
+          ...videoList.data,
+          nextPageToken: response.data.nextPageToken,
+        })
+      ),
+      put(
+        openToast({
+          open: true,
+          message: type.split("_")[0] + " Success",
+          type: toastType.success,
+        })
+      ),
+    ]);
+  } catch (e) {
+    yield put(
+      openToast({
+        open: true,
+        message: type.split("_")[0] + " Failed",
+        type: toastType.fail,
+      })
+    );
+  }
+}
+
+function* getMoreVideosSaga({ type, payload }: getMoreVideosRequestType): any {
+  try {
+    const response = yield call(getVideos, payload);
+    const videoIds = response.data.items;
+    let videos = "";
+    videoIds.forEach(
+      (video: { id: string }) => (videos = videos + "," + video.id)
+    );
+    const videoList = yield call(getVideos, { id: videos, part: "snippet" });
+
+    yield all([
+      put(
+        getMoreVideosSuccess({
+          ...videoList.data,
+          nextPageToken: response.data.nextPageToken,
+        })
+      ),
       put(
         openToast({
           open: true,
@@ -160,6 +205,7 @@ function* videoSaga() {
     takeLatest(GET_CATEGORIES_REQUEST, getCategoriesSaga),
     takeLatest(GET_VIDEO_REQUEST, getVideoSaga),
     takeLatest(GET_VIDEOS_REQUEST, getVideosSaga),
+    takeLatest(GET_MORE_VIDEOS_REQUEST, getMoreVideosSaga),
     takeLatest(GET_CHANNEL_REQUEST, getChannelSaga),
   ]);
 }
