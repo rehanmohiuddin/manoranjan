@@ -10,7 +10,7 @@ import {
   faThumbsUp,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import AddToPlaylistIcon from "../../assets/playlist.svg";
+import { ReactComponent as AddToPlaylistIcon } from "../../assets/playlist.svg";
 import Modal from "../Modal";
 import Button from "../Button";
 import { useDispatch, useSelector } from "react-redux";
