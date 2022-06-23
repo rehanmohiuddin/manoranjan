@@ -13,6 +13,7 @@ import {
   GET_MORE_VIDEOS_REQUEST,
   GET_VIDEOS_REQUEST,
   GET_VIDEO_REQUEST,
+  SEARCH_VIDEOS_REQUEST,
 } from "../actions/video";
 import { YoutubeInstance } from "../AxiosInstance";
 import {
@@ -25,11 +26,16 @@ import {
   getVideoRequestType,
   getVideosRequestPayload,
   getVideosRequestType,
+  searchVideosRequestPayload,
+  searchVideosRequestType,
+  VideoPayload,
+  VideoSearchPayload,
 } from "../types/videos";
 
 const queryPayload = {
   key: process.env.REACT_APP_YOUTUBE_KEY,
   regionCode: "IN",
+  type: "video",
 };
 
 const getCategories = (payload: getCategoriesRequestPayload) =>
@@ -64,25 +70,26 @@ const getChannel = (payload: getChannelRequestPayload) =>
     },
   });
 
+const searchVideo = ({ q }: searchVideosRequestPayload) =>
+  YoutubeInstance.get("/search", {
+    params: {
+      ...queryPayload,
+      q: q,
+      type: "video",
+      maxResults: "50",
+      part: "snippet",
+    },
+  });
+
 function* getCategoriesSaga({ type, payload }: getCategoriesRequestType): any {
   try {
     const response = yield call(getCategories, payload);
-    yield all([
-      put(getCategoriesSuccess(response.data)),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(getCategoriesSuccess(response.data))]);
   } catch (e) {
-    console.log(e, YoutubeInstance);
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: type.split("_")[1] + " Failed",
         type: toastType.fail,
       })
     );
@@ -97,7 +104,10 @@ function* getVideosSaga({ type, payload }: getVideosRequestType): any {
     videoIds.forEach(
       (video: { id: string }) => (videos = videos + "," + video.id)
     );
-    const videoList = yield call(getVideos, { id: videos, part: "snippet" });
+    const videoList = yield call(getVideos, {
+      id: videos,
+      part: "snippet,statistics,status",
+    });
 
     yield all([
       put(
@@ -106,19 +116,12 @@ function* getVideosSaga({ type, payload }: getVideosRequestType): any {
           nextPageToken: response.data.nextPageToken,
         })
       ),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
     ]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Fetch Videos Failed",
         type: toastType.fail,
       })
     );
@@ -133,7 +136,10 @@ function* getMoreVideosSaga({ type, payload }: getMoreVideosRequestType): any {
     videoIds.forEach(
       (video: { id: string }) => (videos = videos + "," + video.id)
     );
-    const videoList = yield call(getVideos, { id: videos, part: "snippet" });
+    const videoList = yield call(getVideos, {
+      id: videos,
+      part: "snippet,statistics,status",
+    });
 
     yield all([
       put(
@@ -142,19 +148,12 @@ function* getMoreVideosSaga({ type, payload }: getMoreVideosRequestType): any {
           nextPageToken: response.data.nextPageToken,
         })
       ),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
     ]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Fetching Videos Failed",
         type: toastType.fail,
       })
     );
@@ -164,21 +163,12 @@ function* getMoreVideosSaga({ type, payload }: getMoreVideosRequestType): any {
 function* getVideoSaga({ type, payload }: getVideoRequestType): any {
   try {
     const response = yield call(getVideo, payload);
-    yield all([
-      put(getVideoSuccess(response.data)),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(getVideoSuccess(response.data))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Fetching Video Failed",
         type: toastType.fail,
       })
     );
@@ -193,7 +183,32 @@ function* getChannelSaga({ type, payload }: getChannelRequestType): any {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Fetch Channels Failed",
+        type: toastType.fail,
+      })
+    );
+  }
+}
+
+function* searchVideosSaga({ type, payload }: searchVideosRequestType): any {
+  try {
+    const response = yield call(searchVideo, payload);
+    const videos: any[] = [];
+    response.data.items.forEach((item: VideoSearchPayload) => {
+      videos.push({ ...item, id: item.id.videoId });
+    });
+    yield put(
+      getVideosSuccess({
+        ...response.data,
+        items: videos,
+        nextPageToken: response.data.nextPageToken,
+      })
+    );
+  } catch (e) {
+    yield put(
+      openToast({
+        open: true,
+        message: "Search Failed",
         type: toastType.fail,
       })
     );
@@ -207,6 +222,7 @@ function* videoSaga() {
     takeLatest(GET_VIDEOS_REQUEST, getVideosSaga),
     takeLatest(GET_MORE_VIDEOS_REQUEST, getMoreVideosSaga),
     takeLatest(GET_CHANNEL_REQUEST, getChannelSaga),
+    takeLatest(SEARCH_VIDEOS_REQUEST, searchVideosSaga),
   ]);
 }
 

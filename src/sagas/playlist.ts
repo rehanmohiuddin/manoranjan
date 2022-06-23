@@ -93,16 +93,7 @@ const removeVideoFromPlaylist = (payload: deleteplayListVideoPayload) => {
 function* getAllPlaylistsSaga({ type }: fetchPlaylistsRequest): any {
   try {
     const response = yield call(getAllPlaylists);
-    yield all([
-      put(fetchAllPlaylistsSuccess({ myPlaylists: response })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(fetchAllPlaylistsSuccess({ myPlaylists: response }))]);
   } catch (e) {
     yield put(
       openToast({
@@ -117,21 +108,12 @@ function* getAllPlaylistsSaga({ type }: fetchPlaylistsRequest): any {
 function* createPlaylistSaga({ type, payload }: createPlaylistRequest): any {
   try {
     const response = yield call(createPlaylist, payload);
-    yield all([
-      put(createPlaylistSuccess(payload)),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(createPlaylistSuccess(payload))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Create Playlist Failed",
         type: toastType.fail,
       })
     );
@@ -144,21 +126,12 @@ function* deletePlaylistSaga({
 }: deletePlaylistVideoRequest): any {
   try {
     const response = yield call(deletePlaylist, payload);
-    yield all([
-      put(deletePlaylistSuccess(payload)),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(deletePlaylistSuccess(payload))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Delete Playlist Failed",
         type: toastType.fail,
       })
     );
@@ -176,17 +149,16 @@ function* addVideoToPlaylistSaga({
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Added Video To Playlist",
           type: toastType.success,
         })
       ),
     ]);
   } catch (e) {
-    console.log(e);
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Add Video Failed",
         type: toastType.fail,
       })
     );
@@ -199,22 +171,13 @@ function* removeVideoFromPlaylistSaga({
 }: deletePlaylistVideoRequest): any {
   try {
     const response = yield call(removeVideoFromPlaylist, payload);
-    yield all([
-      put(removeVideofromPlaylistSuccess(payload)),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(removeVideofromPlaylistSuccess(payload))]);
   } catch (e) {
     console.log(e);
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Removed Video Failed",
         type: toastType.fail,
       })
     );

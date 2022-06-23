@@ -42,13 +42,6 @@ function* getUserSaga({ type }: getUserRequestType): any {
           isLoggedIn: response ? true : false,
         })
       ),
-      put(
-        openToast({
-          open: true,
-          message: "Authorized User",
-          type: toastType.success,
-        })
-      ),
     ]);
   } catch (e: any) {
     yield put(

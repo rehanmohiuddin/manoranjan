@@ -253,11 +253,11 @@ function Index() {
                           <div className="video-channel">
                             {video.snippet.channelTitle}
                           </div>
+                          <FontAwesomeIcon
+                            className="watch-later"
+                            icon={faClock}
+                          />
                         </div>
-                        <FontAwesomeIcon
-                          className="watch-later"
-                          icon={faClock}
-                        />
                       </div>
                     </Link>
                   )}

@@ -58,16 +58,7 @@ const removeAllLikedVideos = () =>
 function* getAllLikedVideosSaga({ type }: getAllLikedVideosRequestType): any {
   try {
     const response = yield call(getAllLikedVideos);
-    yield all([
-      put(getAllLikedVideosRequestSuccess({ videos: response })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(getAllLikedVideosRequestSuccess({ videos: response }))]);
   } catch (e) {
     yield put(
       openToast({
@@ -87,7 +78,7 @@ function* addToLikeVideosSaga({ type, payload }: likeVideoRequestType): any {
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Add to liked Videos",
           type: toastType.success,
         })
       ),
@@ -114,7 +105,7 @@ function* removeFromLikeVideosSaga({
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Removed From Liked Videos",
           type: toastType.success,
         })
       ),
@@ -140,7 +131,7 @@ function* removerAllLikedVideosSaga({
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Removed All Liked Videos",
           type: toastType.success,
         })
       ),

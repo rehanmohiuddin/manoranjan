@@ -19,8 +19,9 @@ import Button from "../Button";
 import Category from "../../components/Category";
 import { useDispatch, useSelector } from "react-redux";
 import { videoState } from "../../types/videos";
-import { getCategoriesRequest } from "../../actions/video";
+import { getCategoriesRequest, searchVideosRequest } from "../../actions/video";
 import { authState } from "../../types/auth";
+import Search from "./Search";
 
 function Header({
   showSideNav = false,
@@ -32,7 +33,7 @@ function Header({
   const [showMobNav, setMobNav] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categories = [] } = useSelector(
+  const { categories = [], videos } = useSelector(
     (state: { video: videoState }) => state.video
   );
   const [params] = useSearchParams();
@@ -47,13 +48,14 @@ function Header({
     dispatch(getCategoriesRequest({ chart: "mostPopular" }));
   }, []);
 
+  const handleSearch = (query: string) => {
+    // dispatch(searchVideosRequest({ q: query }));
+    navigate(`/videos?q=${query}`);
+  };
+
   const renderHeaderBody = () => (
     <>
-      <div className="search-continer">
-        <FontAwesomeIcon icon={faSearch} />
-        <input placeholder="Search By Name" />
-      </div>
-
+      <Search search={handleSearch} />
       <div className="avatar-icon">
         {!isLoggedIn ? (
           <Button
