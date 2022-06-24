@@ -30,6 +30,11 @@
       width: 50%;
       @extend .margin-top-1;
     }
+    .read-more {
+      cursor: pointer;
+      color: $gray;
+      font-weight: 600;
+    }
     .readmore-btn {
       @extend .flex-row, .flex-justify-center;
       .btn-primary {

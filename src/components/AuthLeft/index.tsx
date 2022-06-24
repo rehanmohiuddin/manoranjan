@@ -9,12 +9,15 @@ function Index() {
       <img src={Logo} />
       <div>Watch Videos on the Go</div>
       <div className="readmore-btn">
-        <Button
+        <a
+          className="read-more"
+          href="https://developers.google.com/youtube/v3"
           title={"Read More"}
-          style={BUTTON.PRIMARY}
           type={BUTTON.BUTTON}
-          linkTo={"/login"}
-        />
+          target="_blank"
+        >
+          Read More
+        </a>
       </div>
     </div>
   );
