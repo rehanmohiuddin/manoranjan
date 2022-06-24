@@ -4,17 +4,15 @@ import Logo from "../../assets/icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleLeft,
+  faCamera,
   faClock,
   faHeart,
   faHistory,
   faHome,
-  faPencil,
   faRankingStar,
   faSignOut,
-  faUser,
-  faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../actions/auth";
 import { authState } from "../../types/auth";
@@ -28,7 +26,7 @@ function Index() {
   const { firstName = "" } = user ?? {};
   const navRoutes = [
     { route: "/", icon: faHome, name: "Home" },
-    { route: "/videos", icon: faPencil, name: "Videos" },
+    { route: "/videos", icon: faCamera, name: "Videos" },
     { route: "/playlist", icon: faRankingStar, name: "PlayLists" },
     { route: "/like/videos", icon: faHeart, name: "Liked" },
     { route: "/watchlater", icon: faClock, name: "Watch Later" },
