@@ -151,9 +151,7 @@ const Video = ({
             onClick={() => setOptions(!showOptions)}
           />
           {showOptions && (
-            <ul onClick={hideOptions} className="video-options">
-              {renderVideoActions[from](video)}
-            </ul>
+            <ul className="video-options">{renderVideoActions[from](video)}</ul>
           )}
         </div>
 
