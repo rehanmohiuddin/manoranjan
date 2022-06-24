@@ -148,6 +148,7 @@ const Video = ({
           </Link>
           <FontAwesomeIcon
             icon={faEllipsisVertical}
+            className="options-icon"
             onClick={() => setOptions(!showOptions)}
           />
           {showOptions && (

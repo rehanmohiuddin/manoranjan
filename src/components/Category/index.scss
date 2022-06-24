@@ -6,7 +6,6 @@
   overflow: auto;
   width: calc($spacing-unit * 78);
   flex-wrap: nowrap;
-  overflow-x: auto;
 
   .category {
     @extend .padding-half;
