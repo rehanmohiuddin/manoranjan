@@ -42,7 +42,14 @@ function Index() {
 
   return (
     <nav>
-      <button>{firstName.charAt(0)}</button>
+      <div className="avatar-container">
+        <button
+          data-firstName={firstName ? firstName : "Please Log In"}
+          className="avatar-btn"
+        >
+          {firstName ? firstName.charAt(0) : "M"}
+        </button>
+      </div>
       <div className="nav-icons">
         {navRoutes.map(({ route, icon, name }) => (
           <NavLink

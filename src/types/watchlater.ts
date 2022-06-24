@@ -1,11 +1,11 @@
-import { VideoPayload } from "./videos";
+import { VideoPayload, VideoPayloadSuggested } from "./videos";
 
 export type addToWatchLaterPayload = {
-  video: VideoPayload;
+  video: VideoPayload | VideoPayloadSuggested;
 };
 
 export type addToWatchLaterSuccessPayload = {
-  video: VideoPayload;
+  video: VideoPayload | VideoPayloadSuggested;
 };
 
 export type removeFromWatchLaterPayload = {

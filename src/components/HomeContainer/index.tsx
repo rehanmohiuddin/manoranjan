@@ -3,11 +3,12 @@ import "./index.scss";
 import Nav from "../SideNav";
 import Header from "../Header";
 import { useSwipeable } from "react-swipeable";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllLikedVideosRequest } from "../../actions/likes";
 import { getAllWatchLaterVideosRequest } from "../../actions/watchlater";
 import { getUserRequest } from "../../actions/auth";
 import { getAllHistoryVideosRequest } from "../../actions/history";
+import { authState } from "../../types/auth";
 
 interface Props {
   children: React.ReactNode;
@@ -16,13 +17,21 @@ interface Props {
 function Index({ children }: Props) {
   const [showSideNav, setSideNav] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const { isLoggedIn = false, user } = useSelector(
+    (state: { auth: authState }) => state.auth
+  );
 
   useEffect(() => {
-    dispatch(getAllLikedVideosRequest());
-    dispatch(getAllWatchLaterVideosRequest());
     dispatch(getUserRequest());
-    dispatch(getAllHistoryVideosRequest());
   }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getAllLikedVideosRequest());
+      dispatch(getAllWatchLaterVideosRequest());
+      dispatch(getAllHistoryVideosRequest());
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="root-home-container">

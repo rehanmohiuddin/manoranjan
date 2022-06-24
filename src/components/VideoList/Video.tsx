@@ -31,8 +31,7 @@ import { parseViews } from "../../util/views";
 import { playlistState } from "../../types/playlist";
 import { watchLaterState } from "../../types/watchlater";
 import Modal from "../Modal";
-import AddToPlaylist from "../../components/Playlist/AddToPlaylist";
-import CreatePlaylist from "../../components/Playlist/Create";
+import Playlist from "../../components/Playlist";
 
 const Video = ({
   video,
@@ -44,11 +43,7 @@ const Video = ({
   from: string;
 }) => {
   const [showOptions, setOptions] = useState<boolean>(false);
-  const [playlistAction, setPlaylistAction] = useState<{
-    _id: string;
-    video: any;
-    open: string | null;
-  }>({ _id: "", video: {}, open: null });
+
   const { isLoggedIn = false } = useSelector(
     (state: { auth: authState }) => state.auth
   );
@@ -85,18 +80,7 @@ const Video = ({
           />
           {allLikedVideos[video.id] ? "Liked" : "Like"}
         </div>
-        <div
-          onClick={() =>
-            setPlaylistAction({
-              ...playlistAction,
-              open: "ADD",
-              video: video,
-            })
-          }
-        >
-          <FontAwesomeIcon icon={faPlayCircle} />
-          Add To Playlist
-        </div>
+        <Playlist video={video} />
         <div
           onClick={() =>
             dispatch(
@@ -147,9 +131,11 @@ const Video = ({
     ),
   };
 
+  const hideOptions = () => setOptions(false);
+
   return (
     <>
-      <div className="video">
+      <div onMouseLeave={hideOptions} className="video">
         <Link to={`/watch/${video.id}`}>
           <img
             src={video.snippet.thumbnails.high.url}
@@ -165,7 +151,9 @@ const Video = ({
             onClick={() => setOptions(!showOptions)}
           />
           {showOptions && (
-            <ul className="video-options">{renderVideoActions[from](video)}</ul>
+            <ul onClick={hideOptions} className="video-options">
+              {renderVideoActions[from](video)}
+            </ul>
           )}
         </div>
 
@@ -181,42 +169,8 @@ const Video = ({
               {parseViews(video?.statistics?.viewCount)}
             </div>
           )}
-          {/* <div>{isLoggedIn && renderVideoActions[from](video)}</div> */}
         </div>
       </div>
-      {playlistAction.open && (
-        <Modal
-          header="Add Video To Playlist"
-          Open={true}
-          close={() => setPlaylistAction({ ...playlistAction, open: null })}
-        >
-          <>
-            <div
-              className="create-playlist-on-go"
-              onClick={() => {
-                setPlaylistAction({
-                  ...playlistAction,
-                  open: playlistAction.open === "ADD" ? "CREATE" : "ADD",
-                });
-              }}
-            >
-              {playlistAction.open === "ADD" ? "Create New" : "ADD"}
-            </div>
-            {playlistAction.open === "ADD" ? (
-              <AddToPlaylist
-                playlistAction={playlistAction}
-                setPlaylistAction={setPlaylistAction}
-              />
-            ) : (
-              <CreatePlaylist
-                setOpen={() => {
-                  setPlaylistAction({ ...playlistAction, open: "ADD" });
-                }}
-              />
-            )}
-          </>
-        </Modal>
-      )}
     </>
   );
 };

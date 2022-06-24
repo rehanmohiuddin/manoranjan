@@ -21,7 +21,10 @@ import {
   removeFromhistorysRequestType,
 } from "../types/history";
 
-const getData = () => JSON.parse(localStorage.getItem("user") ?? "");
+const getData = () =>
+  localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user") ?? "")
+    : {};
 
 const addToDb = ({ key, data }: { key: string; data: any }) =>
   localStorage.setItem("user", JSON.stringify({ ...getData(), [key]: data }));

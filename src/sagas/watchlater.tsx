@@ -77,7 +77,16 @@ function* addToWatchLaterVideosSaga({
 }: addToWatchLatersRequestType): any {
   try {
     const response = yield call(addToWatchLaterVideos, payload);
-    yield all([put(addToWatchLaterVideosSuccess({ video: payload.video }))]);
+    yield all([
+      put(addToWatchLaterVideosSuccess({ video: payload.video })),
+      put(
+        openToast({
+          open: true,
+          message: "Added to Watchlater",
+          type: toastType.success,
+        })
+      ),
+    ]);
   } catch (e) {
     yield put(
       openToast({

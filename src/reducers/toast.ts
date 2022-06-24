@@ -5,14 +5,13 @@ export default (state: toastState, action: toastAction) => {
   const { type, payload } = action;
   switch (type) {
     case OPEN_TOAST:
-      const { message = "" } = payload ?? {};
-      return { ...state, ...payload, message: message.toLowerCase() };
+      return { ...state, open: true, message: payload.message.toLowerCase() };
 
     case CLOSE_TOAST:
       return {
         ...state,
         open: false,
-        message: "",
+        message: null,
       };
 
     default:

@@ -10,6 +10,23 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
+  .avatar-container {
+    position: relative;
+
+    .avatar-btn:hover:after {
+      @extend .padding-half;
+      content: attr(data-firstName);
+      white-space: nowrap;
+      position: absolute;
+      left: 4rem;
+      top: 1.4rem;
+      color: black;
+      background-color: $gray;
+      color: $white;
+      border-radius: 0.2rem;
+    }
+  }
+
   button {
     @extend .padding-full, .margin-full;
     border: none;
@@ -17,6 +34,7 @@ nav {
     border-radius: 0.2rem;
     color: $white;
     margin: calc($spacing-unit * 1);
+    cursor: pointer;
   }
   .filler {
     flex-grow: 1;

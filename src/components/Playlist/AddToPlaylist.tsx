@@ -48,7 +48,7 @@ const AddToPlaylist = ({
           type={BUTTON.BUTTON}
           style={BUTTON.PRIMARY}
         >
-          <div>
+          <div className="icon">
             <FontAwesomeIcon icon={faPlus} />
             Add
           </div>

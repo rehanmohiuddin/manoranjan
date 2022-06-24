@@ -91,17 +91,26 @@ function* registerSaga({ type, payload }: registerRequest): any {
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Register Success",
           type: toastType.success,
         })
       ),
     ]);
   } catch (e: any) {
-    yield put(
-      registerFailure({
-        error: e.toString(),
-      })
-    );
+    yield all([
+      put(
+        registerFailure({
+          error: e.toString(),
+        })
+      ),
+      put(
+        openToast({
+          open: true,
+          message: " Register Failed",
+          type: toastType.fail,
+        })
+      ),
+    ]);
   }
 }
 
