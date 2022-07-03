@@ -16,9 +16,9 @@ import { v4 as uuid } from "uuid";
 import { playlistState } from "../../types/playlist";
 import playlistThumbnail from "../../assets/playlist_thumbail.png";
 import { Link } from "react-router-dom";
+import CreatePlaylist from "../../components/Playlist/Create";
 
 function Index() {
-  const name = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const { playlists = [], allPlaylists = {} } = useSelector(
     (state: { playlist: playlistState }) => state.playlist
@@ -29,17 +29,6 @@ function Index() {
   useEffect(() => {
     dispatch(getAllPlaylists());
   }, []);
-
-  const createPlaylistHandler = () => {
-    name.current?.value &&
-      dispatch(
-        createPlaylist({
-          _id: uuid(),
-          name: name.current?.value,
-        })
-      );
-    setOpen(false);
-  };
 
   return (
     <HomeContainer>
@@ -60,35 +49,7 @@ function Index() {
           ref={ref}
           header="Create Playlist"
         >
-          <div className="create-paylist-container">
-            <label>PlayList Name *</label>
-            <div className="playlist-input">
-              <FontAwesomeIcon icon={faPlayCircle} />{" "}
-              <input ref={name} placeholder="Ex : Lofi" />
-            </div>
-            <div className="create-playlist-bottom">
-              <Button
-                callBack={() => setOpen(false)}
-                type={BUTTON.BUTTON}
-                style={BUTTON.OUTLINE}
-              >
-                <div>
-                  <FontAwesomeIcon icon={faCancel} />
-                  Cancel
-                </div>
-              </Button>
-              <Button
-                callBack={createPlaylistHandler}
-                type={BUTTON.BUTTON}
-                style={BUTTON.PRIMARY}
-              >
-                <div>
-                  <FontAwesomeIcon icon={faPlus} />
-                  Create
-                </div>
-              </Button>
-            </div>
-          </div>
+          <CreatePlaylist setOpen={setOpen} />
         </Modal>
       )}
       <div className="playlists">

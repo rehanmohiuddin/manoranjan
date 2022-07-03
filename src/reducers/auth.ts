@@ -24,7 +24,6 @@ export default (state: authState, action: authActions) => {
         loading: true,
       };
     case LOGIN_SUCCESS:
-      console.log(payload);
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -51,6 +50,7 @@ export default (state: authState, action: authActions) => {
       return {
         ...state,
         error: payload,
+        loading: false,
       };
     case REGISTER_REQUEST:
       return {
@@ -67,6 +67,7 @@ export default (state: authState, action: authActions) => {
       return {
         ...state,
         error: payload,
+        loading: false,
       };
 
     case LOG_OUT:

@@ -17,13 +17,12 @@ function Index() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer: any = null;
+    timer = setTimeout(() => {
+      clearTimeout(timer);
       dispatch(closeToast());
     }, 5000);
-    return () => {
-      dispatch(closeToast());
-    };
-  }, []);
+  }, [message]);
 
   return (
     <>

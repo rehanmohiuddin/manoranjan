@@ -21,7 +21,10 @@ import {
   removeFromhistorysRequestType,
 } from "../types/history";
 
-const getData = () => JSON.parse(localStorage.getItem("user") ?? "");
+const getData = () =>
+  localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user") ?? "")
+    : {};
 
 const addToDb = ({ key, data }: { key: string; data: any }) =>
   localStorage.setItem("user", JSON.stringify({ ...getData(), [key]: data }));
@@ -60,21 +63,12 @@ const removeAllHistoryVideos = () =>
 function* getAllHistoryVideosSaga({ type }: getAllhistoryRequestType): any {
   try {
     const response = yield call(getAllHistoryVideos);
-    yield all([
-      put(getAllHistoryVideosRequestSuccess({ videos: response })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(getAllHistoryVideosRequestSuccess({ videos: response }))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Get History Failed",
         type: toastType.fail,
       })
     );
@@ -87,21 +81,12 @@ function* addToHistoryVideosSaga({
 }: addTohistoryRequestType): any {
   try {
     const response = yield call(addToHistoryVideos, payload);
-    yield all([
-      put(addToHistoryVideosSuccess({ video: payload.video })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(addToHistoryVideosSuccess({ video: payload.video }))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Add to history Failed",
         type: toastType.fail,
       })
     );
@@ -114,21 +99,12 @@ function* removeFromHistoryrVideosSaga({
 }: removeFromhistorysRequestType): any {
   try {
     const response = yield call(removeFromHistoryVideos, payload);
-    yield all([
-      put(removeFromHistoryVideosSuccess({ video: payload.video })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(removeFromHistoryVideosSuccess({ video: payload.video }))]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Remove Failed",
         type: toastType.fail,
       })
     );
@@ -140,22 +116,13 @@ function* removeAllHistoryVideosSaga({
 }: removeAllLikedVideosRequestType): any {
   try {
     const response = yield call(removeAllHistoryVideos);
-    yield all([
-      put(removeAllHistoryVideosSuccess()),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(removeAllHistoryVideosSuccess())]);
   } catch (e) {
     console.log(e);
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Remove All Failed",
         type: toastType.fail,
       })
     );

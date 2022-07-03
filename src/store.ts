@@ -15,7 +15,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleWare) =>
     process.env.NODE_ENV === "production"
       ? getDefaultMiddleWare().concat(sagaMiddleware)
-      : getDefaultMiddleWare().concat(sagaMiddleware).concat(logger),
+      : getDefaultMiddleWare().concat(sagaMiddleware),
 });
 
 // Run the saga

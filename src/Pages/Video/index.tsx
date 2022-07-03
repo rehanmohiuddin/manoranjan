@@ -33,6 +33,7 @@ import Button from "../../components/Button";
 import { playlistState } from "../../types/playlist";
 import { BUTTON } from "../../util/constants";
 import { addVideoToPlaylist } from "../../actions/playlist";
+import Playlist from "../../components/Playlist";
 
 function Index() {
   const location = useLocation();
@@ -108,28 +109,51 @@ function Index() {
     videoId && video.getVideos().getChannel().getSuggestions();
   }, [videoId]);
 
-  const videoAction = {
-    like: () => {
-      dispatch(
-        allLikedVideos[videoId]
-          ? removeFromLikeVideosRequest({ video: allVideos[videoId] })
-          : addToLikeVideosRequest({ video: allVideos[videoId] })
-      );
+  const videoAction = [
+    {
+      textClass: {
+        class: allLikedVideos[videoId] ? "active" : "",
+        text: allLikedVideos[videoId] ? "Liked" : "Like",
+      },
+      action: () =>
+        dispatch(
+          allLikedVideos[videoId]
+            ? removeFromLikeVideosRequest({ video: allVideos[videoId] })
+            : addToLikeVideosRequest({ video: allVideos[videoId] })
+        ),
+      icon: faThumbsUp,
     },
-    watchlater: () => {
-      dispatch(
-        allwatchlaterVideos[videoId]
-          ? removeFromWatchLaterVideosRequest({ video: allVideos[videoId] })
-          : addToWatchLaterVideosRequest({ video: allVideos[videoId] })
-      );
+    {
+      textClass: {
+        class: allwatchlaterVideos[videoId] ? "active" : "",
+        text: allwatchlaterVideos[videoId]
+          ? "Added To Watch Later"
+          : "Watch Later",
+      },
+      action: () =>
+        dispatch(
+          allwatchlaterVideos[videoId]
+            ? removeFromWatchLaterVideosRequest({ video: allVideos[videoId] })
+            : addToWatchLaterVideosRequest({ video: allVideos[videoId] })
+        ),
+      icon: faClock,
     },
-    playlist: () =>
-      setPlaylistAction({
-        ...playlistAction,
-        open: true,
-        video: allVideos[videoId],
-      }),
-  };
+  ];
+
+  const renderVideoOptions = () => (
+    <div className="actions">
+      {videoAction.map((action) => (
+        <div onClick={action.action}>
+          <FontAwesomeIcon
+            className={action.textClass.class}
+            icon={action.icon}
+          />
+          {action.textClass.text}
+        </div>
+      ))}
+      <Playlist video={allVideos[videoId]} />
+    </div>
+  );
 
   return (
     <HomeContainer>
@@ -148,76 +172,7 @@ function Index() {
                 allVideos[videoId]?.snippet.publishedAt
               ).toLocaleString()}
             </div>
-            <div className="actions">
-              <div onClick={videoAction.like}>
-                <FontAwesomeIcon
-                  className={allLikedVideos[videoId] ? "active" : ""}
-                  icon={faThumbsUp}
-                />
-                {allLikedVideos[videoId] ? "Liked" : "Like"}
-              </div>
-              <div>
-                <FontAwesomeIcon icon={faThumbsDown} />
-                DisLike
-              </div>
-              <div onClick={videoAction.playlist}>
-                <FontAwesomeIcon icon={faPlayCircle} />
-                Add To Playlist
-              </div>
-              {playlistAction.open && (
-                <Modal
-                  header="Add Video To Playlist"
-                  Open={true}
-                  close={() =>
-                    setPlaylistAction({ ...playlistAction, open: false })
-                  }
-                >
-                  <>
-                    <select
-                      onChange={(e) =>
-                        setPlaylistAction({
-                          ...playlistAction,
-                          _id: e.target.value,
-                        })
-                      }
-                      className="select-playlists"
-                    >
-                      <option>Select</option>
-                      {playlists.map((_id) => (
-                        <option value={_id}>{allPlaylists[_id].name}</option>
-                      ))}
-                    </select>
-                    <Button
-                      callBack={() => {
-                        dispatch(
-                          addVideoToPlaylist({
-                            _id: playlistAction._id,
-                            video: playlistAction.video,
-                          })
-                        );
-                        setPlaylistAction({ ...playlistAction, open: false });
-                      }}
-                      type={BUTTON.BUTTON}
-                      style={BUTTON.PRIMARY}
-                    >
-                      <div>
-                        <FontAwesomeIcon icon={faPlus} />
-                        Add
-                      </div>
-                    </Button>
-                  </>
-                </Modal>
-              )}
-              <div onClick={videoAction.watchlater}>
-                <FontAwesomeIcon
-                  className={allwatchlaterVideos[videoId] ? "active" : ""}
-                  icon={faClock}
-                />
-                {allwatchlaterVideos[videoId]
-                  ? "Added To Watch Later"
-                  : "Watch Later"}
-              </div>
-            </div>
+            {renderVideoOptions()}
           </div>
           {allVideos[videoId] && (
             <div className="channel">
@@ -242,24 +197,39 @@ function Index() {
               {suggestions.items.map((video) => (
                 <>
                   {video.snippet && (
-                    <Link to={`/watch?v=${video.id.videoId}`} className="video">
-                      <img
-                        src={video.snippet.thumbnails.high.url}
-                        className="video-thumbnail"
-                      />
+                    <div className="video trending">
+                      <Link to={`/watch?v=${video.id.videoId}`}>
+                        <img
+                          src={video.snippet.thumbnails.high.url}
+                          className="video-thumbnail"
+                        />
+                      </Link>
                       <div className="video-body">
-                        <div className="video-title">{video.snippet.title}</div>
+                        <Link to={`/watch?v=${video.id.videoId}`}>
+                          <div className="video-title">
+                            {video.snippet.title}
+                          </div>
+                        </Link>
                         <div className="video-bottom">
                           <div className="video-channel">
                             {video.snippet.channelTitle}
                           </div>
+                          <div
+                            className="icon"
+                            onClick={() =>
+                              dispatch(
+                                addToWatchLaterVideosRequest({ video: video })
+                              )
+                            }
+                          >
+                            <FontAwesomeIcon
+                              className="watch-later"
+                              icon={faClock}
+                            />
+                          </div>
                         </div>
-                        <FontAwesomeIcon
-                          className="watch-later"
-                          icon={faClock}
-                        />
                       </div>
-                    </Link>
+                    </div>
                   )}
                 </>
               ))}

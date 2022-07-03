@@ -9,7 +9,7 @@
     position: absolute;
     top: calc($spacing-unit * 10);
     left: calc($spacing-unit * 10);
-    height: 74vh;
+    height: 78vh;
     width: 89vw;
     overflow-y: scroll;
     .footer {
@@ -23,7 +23,7 @@
   @media screen and (max-width: $medium) {
     header {
       left: 0;
-      width: 95vw;
+      width: 100vw;
     }
     .desktop {
       display: none;

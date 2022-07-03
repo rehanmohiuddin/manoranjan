@@ -38,7 +38,9 @@ const Index: React.FC = function () {
   }, [category]);
 
   useEffect(() => {
-    category && setHeader(allCategories[category].snippet.title);
+    category &&
+      allCategories[category] &&
+      setHeader(allCategories[category].snippet.title);
   }, [category]);
 
   const removeAllFiltersHandler = () => {

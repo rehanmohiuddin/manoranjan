@@ -59,13 +59,6 @@ function* getAllWatchLaterVideosSaga({
     const response = yield call(getAllWatchLaterVideos);
     yield all([
       put(getAllWatchLaterVideosRequestSuccess({ videos: response })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
     ]);
   } catch (e) {
     yield put(
@@ -89,7 +82,7 @@ function* addToWatchLaterVideosSaga({
       put(
         openToast({
           open: true,
-          message: type.split("_")[0] + " Success",
+          message: "Added to Watchlater",
           type: toastType.success,
         })
       ),
@@ -98,7 +91,7 @@ function* addToWatchLaterVideosSaga({
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Add to watchlater Failed",
         type: toastType.fail,
       })
     );
@@ -113,19 +106,12 @@ function* removeFromWatchLaterVideosSaga({
     const response = yield call(removeFromWatchLaterVideos, payload);
     yield all([
       put(removeFromWatchLaterVideosSuccess({ video: payload.video })),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
     ]);
   } catch (e) {
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Remove from Watchlater Failed",
         type: toastType.fail,
       })
     );
@@ -137,22 +123,12 @@ function* removerAllWatchLaterVideosSaga({
 }: removeAllWatchLaterRequestType): any {
   try {
     const response = yield call(removeAllWatchLaterVideos);
-    yield all([
-      put(removeAllWatchLaterVideosSuccess()),
-      put(
-        openToast({
-          open: true,
-          message: type.split("_")[0] + " Success",
-          type: toastType.success,
-        })
-      ),
-    ]);
+    yield all([put(removeAllWatchLaterVideosSuccess())]);
   } catch (e) {
-    console.log(e);
     yield put(
       openToast({
         open: true,
-        message: type.split("_")[0] + " Failed",
+        message: "Remove All Watchlater Failed",
         type: toastType.fail,
       })
     );

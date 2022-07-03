@@ -100,7 +100,8 @@ export type videoAction = {
     getVideoRequestPayload &
     getVideosRequestPayload &
     getVideosSuccessPayload &
-    videoErrorPayload;
+    videoErrorPayload &
+    searchVideosSuccessPayload;
 };
 
 export type getCategoriesSuccessPayload = {
@@ -115,7 +116,7 @@ export type getCategoriesSuccessPayload = {
 };
 
 export type getVideosSuccessPayload = {
-  items: [VideoPayload];
+  items: VideoPayload[];
   nextPageToken: string;
   pageInfo: {
     totalResults: Number;
@@ -135,6 +136,58 @@ export type VideoPayload = {
   kind: string;
   etag: string;
   id: string;
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+      medium: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+      high: {
+        url: string;
+        width: Number;
+        height: Number;
+      };
+    };
+    channelTitle: string;
+    tags: [string];
+    categoryId: string;
+    liveBroadcastContent: string;
+    localized: {
+      title: string;
+      description: string;
+    };
+    defaultAudioLanguage: string;
+  };
+  statistics: {
+    viewCount: string;
+    likeCount: string;
+    favoriteCount: string;
+    commentCount: string;
+  };
+  status: {
+    uploadStatus: string;
+    privacyStatus: string;
+    license: string;
+    embeddable: boolean;
+    publicStatsViewable: boolean;
+    madeForKids: boolean;
+  };
+};
+
+export type VideoSearchPayload = {
+  kind: string;
+  etag: string;
+  id: { videoId: string };
   snippet: {
     publishedAt: string;
     channelId: string;
@@ -223,9 +276,29 @@ export type videoErrorPayload = {
   };
 };
 
+export interface searchVideosRequestPayload {
+  q: string;
+  pageToken?: string;
+  part?: string;
+}
+
+export interface searchVideosSuccessPayload {
+  items: VideoSearchPayload[];
+  nextPageToken: string;
+  pageInfo: {
+    totalResults: Number;
+    resultsPerPage: Number;
+  };
+}
+
 export interface getCategoriesRequestType {
   type: string;
   payload: getCategoriesRequestPayload;
+}
+
+export interface searchVideosRequestType {
+  type: string;
+  payload: searchVideosRequestPayload;
 }
 
 export interface getVideosRequestType {

@@ -4,6 +4,7 @@ import {
   GET_CATEGORIES_SUCCESS,
   GET_CHANNEL_SUCCESS,
   GET_MORE_VIDEOS_SUCCESS,
+  GET_SEARCH_VIDEOS_SUCCESS,
   GET_VIDEOS_FAILURE,
   GET_VIDEOS_REQUEST,
   GET_VIDEOS_SUCCESS,
@@ -15,6 +16,7 @@ import {
   getCategoriesSuccessPayload,
   videoAction,
   VideoPayload,
+  VideoSearchPayload,
   videoState,
 } from "../types/videos";
 
@@ -63,11 +65,13 @@ export default (state: videoState, action: videoAction) => {
       payload.items.forEach((item) => {
         _allVideos[item.id] = item;
       });
+      // console.log(payload);
       return {
         ...state,
         videos: { ...payload },
         allVideos: _allVideos,
       };
+
     case GET_MORE_VIDEOS_SUCCESS:
       const _allMoreVideos: { [key: string]: VideoPayload } = {
         ...state.allVideos,

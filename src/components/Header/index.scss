@@ -38,6 +38,7 @@ header {
     width: 50%;
     svg {
       padding: 0;
+      cursor: pointer;
     }
     @extend .flex-row, .gap-1, .padding-half;
     input {
@@ -45,6 +46,7 @@ header {
       border: none;
       outline: none;
       font-size: 1rem;
+      width: 100%;
     }
   }
   .mobNav {

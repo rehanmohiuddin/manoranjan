@@ -1,0 +1,18 @@
+@use "../../styles/util.scss";
+@import "../../styles/variables.scss";
+
+.create-playlist-on-go {
+  @extend .padding-half;
+  border: 1px solid $light-gray;
+  margin-bottom: calc($spacing-unit * 1);
+  text-align: center;
+}
+.create-playlist-on-go:hover {
+  background-color: $dark-gray;
+  color: $white;
+}
+.playlist-bottom {
+  .icon {
+    text-align: center;
+  }
+}

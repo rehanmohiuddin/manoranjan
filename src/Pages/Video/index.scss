@@ -59,30 +59,54 @@
     }
   }
   .video-right {
+    .trending:hover {
+      box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem $light-gray;
+      border: none;
+      transform: scale(1);
+      transition-duration: 300ms;
+    }
+    .video-channel,
+    .video-title {
+      white-space: wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      width: 70%;
+    }
     .video-list-title {
       padding-right: 0;
     }
     .video-list {
       @extend .flex-column;
-      padding-left: 0;
       max-width: calc($spacing-unit * 25);
       height: 100%;
+      min-width: 22vw;
+      padding: 0;
+      padding-top: 1rem;
+    }
+    .trending {
+      @extend .flex-row, .gap-1, .padding-half;
+      box-sizing: border-box;
+      width: 90%;
       a {
         color: $black;
+        img {
+          width: 100%;
+        }
       }
-    }
-    .video {
-      @extend .flex-row, .gap-1;
-      width: 90%;
-      img {
-        width: 50%;
-      }
+
       .video-body {
         position: relative;
-        .watch-later {
-          position: absolute;
-          bottom: 0;
-          right: 0;
+        .video-title {
+          font-size: calc($spacing-unit * 0.9);
+          font-weight: 600;
+        }
+
+        .icon {
+          @extend .flex-row;
+          width: 100%;
+          justify-content: flex-end;
+          align-items: flex-end;
           font-size: calc($spacing-unit * 1.2);
         }
       }

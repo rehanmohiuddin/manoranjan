@@ -1,7 +1,7 @@
 import { ToastPayload } from "../types/toast";
 
 const OPEN_TOAST = "OPEN_TOAST";
-const CLOSE_TOAST = "HIDE_TOAST";
+const CLOSE_TOAST = "CLOSE_TOAST";
 
 const toastType = {
   success: "SUCCESS",
@@ -14,7 +14,7 @@ const openToast = (payload: ToastPayload) => ({
 });
 
 const closeToast = () => ({
-  type: OPEN_TOAST,
+  type: CLOSE_TOAST,
 });
 
 export { OPEN_TOAST, CLOSE_TOAST, openToast, closeToast, toastType };

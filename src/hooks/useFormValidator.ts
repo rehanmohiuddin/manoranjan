@@ -16,13 +16,14 @@ function useFormValidator() {
   });
 
   const isFieldsEmpty = () => {
+    let bool = false;
     Object.keys(fields).forEach((key) => {
       if (fields[key].value.length === 0) {
         setErrorState({ ...errorState, errorMsg: "Please Fill All Fields" });
-        return true;
+        bool = true;
       }
     });
-    return false;
+    return bool;
   };
 
   const textInput = (name: string, value: string) => {

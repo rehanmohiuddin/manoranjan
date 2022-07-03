@@ -126,7 +126,8 @@ function Index() {
       password: fields.password.value,
       confirmPassword: fields.confirmPassword.value,
     };
-    dispatch(registerRequest(payload));
+    console.log({ isEmpty, errorState });
+    !isEmpty && dispatch(registerRequest(payload));
   };
 
   return (

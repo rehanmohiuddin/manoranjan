@@ -2,6 +2,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import "./index.scss";
+import ReactPortal from "../ReactPortal";
 
 interface Props {
   trigger?: React.ReactNode;
@@ -32,7 +33,7 @@ const Modal = ({ children, trigger, header, Open, close }: Props) => {
   }, [Open]);
 
   return (
-    <div>
+    <ReactPortal>
       <div onClick={() => setOpen(true)}>{trigger}</div>
       {isOpen && (
         <div
@@ -50,7 +51,7 @@ const Modal = ({ children, trigger, header, Open, close }: Props) => {
           </div>
         </div>
       )}
-    </div>
+    </ReactPortal>
   );
 };
 
